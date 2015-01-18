@@ -17,7 +17,7 @@
 + (id)timeSignatureWithTop:(int)top bottom:(int)bottom {
     static NSMutableDictionary *cachedSigs;
     if (cachedSigs == nil) {
-        cachedSigs = [[NSMutableDictionary dictionary] retain];
+        cachedSigs = [NSMutableDictionary dictionary];
     }
     NSString *key = [NSString stringWithFormat:@"%d/%d", top, bottom];
     id sig = [cachedSigs objectForKey:key];

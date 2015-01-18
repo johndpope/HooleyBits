@@ -22,7 +22,7 @@
 + (Clef *)trebleClef {
     static Clef *treble;
     if (treble == nil) {
-        treble = [[[Clef alloc] initWithPitchOffset:2 withOctaveOffset:5] retain];
+        treble = [[Clef alloc] initWithPitchOffset:2 withOctaveOffset:5];
     }
     return treble;
 }
@@ -30,7 +30,7 @@
 + (Clef *)bassClef {
     static Clef *bass;
     if (bass == nil) {
-        bass = [[[Clef alloc] initWithPitchOffset:4 withOctaveOffset:3] retain];
+        bass = [[Clef alloc] initWithPitchOffset:4 withOctaveOffset:3];
     }
     return bass;
 }
@@ -89,6 +89,7 @@
         [string appendString:@"<clef>\n<sign>F</sign>\n<line>4</line>\n</clef>\n"];
     }
 }
+
 //
 //- (Class)getViewClass {
 //    return [ClefDraw class];

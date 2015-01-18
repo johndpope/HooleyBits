@@ -17,7 +17,7 @@ static NSArray *allDrums;
 
 - (id)initWithDrums:(NSArray *)_drums {
     if (self = [super init]) {
-        drums = [[NSMutableArray arrayWithArray:_drums] retain];
+        drums = [NSMutableArray arrayWithArray:_drums];
     }
     return self;
 }
@@ -102,8 +102,7 @@ static NSArray *allDrums;
     [[[staff undoManager] prepareWithInvocationTarget:self] setDrums:drums];
     [[staff undoManager] setActionName:@"editing drum kit"];
     if (![_drums isEqualToArray:drums]) {
-        [drums release];
-        drums = [_drums retain];
+        drums = _drums;
         [self sendChangeNotification];
     }
 }
@@ -185,8 +184,7 @@ static NSArray *allDrums;
         NSArray *octaves = [coder decodeObjectForKey:@"octaves"];
         NSArray *names = [coder decodeObjectForKey:@"names"];
         if (pitches != nil) {
-            [drums release];
-            drums = [[NSMutableArray array] retain];
+            drums = [NSMutableArray array];
             NSEnumerator *pitchEnum = [pitches objectEnumerator];
             NSEnumerator *octaveEnum = [octaves objectEnumerator];
             NSEnumerator *nameEnum = [names objectEnumerator];
@@ -194,7 +192,7 @@ static NSArray *allDrums;
             while (pitch = [pitchEnum nextObject]) {
                 octave = [octaveEnum nextObject];
                 name = [nameEnum nextObject];
-                [drums addObject:[[[Drum alloc] initWithPitch:[pitch intValue] octave:[octave intValue] name:name shortName:name] autorelease]];
+                [drums addObject:[[Drum alloc] initWithPitch:[pitch intValue] octave:[octave intValue] name:name shortName:name]];
             }
         }
     }
@@ -202,9 +200,7 @@ static NSArray *allDrums;
 }
 
 - (void)dealloc {
-    [drums release];
     drums = nil;
-    [super dealloc];
 }
 
 @end

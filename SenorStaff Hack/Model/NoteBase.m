@@ -310,7 +310,8 @@
 
 - (NSString *)description {
     NSMutableString *str = [NSMutableString string];
-    [self addToMusicXMLString:str];
+    NSLog(@"TODO - [self addToMusicXMLString:str];");
+    // [self addToMusicXMLString:str];
     return str;
 }
 

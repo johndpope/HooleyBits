@@ -31,6 +31,7 @@
 		5DD50D991A6BA3280012B2A1 /* TimeSignature.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D861A6BA3280012B2A1 /* TimeSignature.m */; };
 		5DD50D9C1A6BA4680012B2A1 /* NSNumberPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D9B1A6BA4680012B2A1 /* NSNumberPool.m */; };
 		5DD50E001A6BAAE90012B2A1 /* Chomp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD50DFF1A6BAAE90012B2A1 /* Chomp.framework */; };
+		5DD50E021A6BAF3E0012B2A1 /* apprhythmsvol1y2r1.mid in Resources */ = {isa = PBXBuildFile; fileRef = 5DD50E011A6BAF3E0012B2A1 /* apprhythmsvol1y2r1.mid */; };
 		730DEE070FF1789F001D9E33 /* MidiLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 730DEE060FF1789F001D9E33 /* MidiLoader.m */; };
 		7315FCD20FF2EA4F008D3CE1 /* MidiInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 7315FCD10FF2EA4F008D3CE1 /* MidiInterface.m */; };
 		736457B70E6BEC560022079A /* bars - 1 2 3 4.mid in Resources */ = {isa = PBXBuildFile; fileRef = 73FB73810E69FE8600AE64C2 /* bars - 1 2 3 4.mid */; };
@@ -89,6 +90,7 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* SenorStaff Hack_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SenorStaff Hack_Prefix.pch"; sourceTree = "<group>"; };
+		5D40D7751A6BBE2D00252285 /* SNFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SNFactory.h; sourceTree = "<group>"; };
 		5DD50D111A6B6F520012B2A1 /* FScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FScript.framework; sourceTree = "<group>"; };
 		5DD50D121A6B6F520012B2A1 /* libportsmf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libportsmf.a; sourceTree = "<group>"; };
 		5DD50D611A6BA3280012B2A1 /* Chord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chord.h; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 		5DD50D9A1A6BA4680012B2A1 /* NSNumberPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNumberPool.h; sourceTree = "<group>"; };
 		5DD50D9B1A6BA4680012B2A1 /* NSNumberPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberPool.m; sourceTree = "<group>"; };
 		5DD50DFF1A6BAAE90012B2A1 /* Chomp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Chomp.framework; sourceTree = SOURCE_ROOT; };
+		5DD50E011A6BAF3E0012B2A1 /* apprhythmsvol1y2r1.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = apprhythmsvol1y2r1.mid; sourceTree = "<group>"; };
 		730DEE050FF1789F001D9E33 /* MidiLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiLoader.h; path = Src/MidiLoader.h; sourceTree = "<group>"; };
 		730DEE060FF1789F001D9E33 /* MidiLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MidiLoader.m; path = Src/MidiLoader.m; sourceTree = "<group>"; };
 		7315FCD00FF2EA4F008D3CE1 /* MidiInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiInterface.h; path = Src/MidiInterface.h; sourceTree = "<group>"; };
@@ -292,6 +295,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5DD50E011A6BAF3E0012B2A1 /* apprhythmsvol1y2r1.mid */,
 				73CA091F0E77D2A0006D131C /* ring-12-0.mid */,
 				73FB73810E69FE8600AE64C2 /* bars - 1 2 3 4.mid */,
 				7397F7F30E5CA35A003AE8A6 /* Sor_Study.mid */,
@@ -362,6 +366,7 @@
 				5DD50D841A6BA3280012B2A1 /* TempoData.m */,
 				5DD50D851A6BA3280012B2A1 /* TimeSignature.h */,
 				5DD50D861A6BA3280012B2A1 /* TimeSignature.m */,
+				5D40D7751A6BBE2D00252285 /* SNFactory.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -494,6 +499,7 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
+				5DD50E021A6BAF3E0012B2A1 /* apprhythmsvol1y2r1.mid in Resources */,
 				7397F7F40E5CA35A003AE8A6 /* Sor_Study.mid in Resources */,
 				73FB73820E69FE8600AE64C2 /* bars - 1 2 3 4.mid in Resources */,
 				73CA09200E77D2A0006D131C /* ring-12-0.mid in Resources */,
@@ -615,6 +621,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../Source Code/CHDataStructures/build/Debug\"",
@@ -748,6 +755,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../Source Code/CHDataStructures/build/Debug\"",
@@ -780,6 +788,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

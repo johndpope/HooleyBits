@@ -1,7 +1,6 @@
 dependencies: \
   /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/AppControl.m \
   /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/AppControl.h \
-  /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/Model/MusicDocument.h \
   /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/Src/SimpleSong.h \
   /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/Src/SongPlayer.h \
   /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/Src/MidiLoader.h \
@@ -42,4 +41,5 @@ dependencies: \
   /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/Frameworks/FScript.framework/Headers/FSSystem.h \
   /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/Frameworks/FScript.framework/Headers/Array_fscript.h \
   /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/Frameworks/FScript.framework/Headers/Block_fscript.h \
-  /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/Frameworks/FScript.framework/Headers/Number_fscript.h
+  /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/Frameworks/FScript.framework/Headers/Number_fscript.h \
+  /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/MIDIUtil.h

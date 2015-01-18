@@ -14,22 +14,22 @@
 @class Measure;
 @class NoteBase;
 
-@interface Song : NSObject <NSCoding>{
-	MusicDocument *doc;
-	
-	NSMutableArray *staffs;
-	NSMutableArray *tempoData;
-	NSMutableArray *timeSigs;
-	NSMutableArray *repeats;
-	
-	NSTimer *musicPlayerPoll;
-	double playerPosition, playerOffset, playerEnd;
-	MusicPlayer musicPlayer;
-	MusicSequence musicSequence;
-	
-	MusicPlayer feedbackPlayer;
-	MusicSequence feedbackSequence;
-	MusicTrack feedbackTrack;
+@interface Song : NSObject <NSCoding> {
+    MusicDocument *doc;
+    
+    NSMutableArray *staffs;
+    NSMutableArray *tempoData;
+    NSMutableArray *timeSigs;
+    NSMutableArray *repeats;
+    
+    NSTimer *musicPlayerPoll;
+    double playerPosition, playerOffset, playerEnd;
+    MusicPlayer musicPlayer;
+    MusicSequence musicSequence;
+    
+    MusicPlayer feedbackPlayer;
+    MusicSequence feedbackSequence;
+    MusicTrack feedbackTrack;
 }
 
 - (id)initWithDocument:(MusicDocument *)_doc;
@@ -80,9 +80,12 @@
 
 - (void)playToEndpoint:(MIDIEndpointRef)endpoint;
 - (void)playToEndpoint:(MIDIEndpointRef)endpoint notesToPlay:(id)selection;
-- (void)playFeedbackNote:(NoteBase *)note atPosition:(float)pos inMeasure:(Measure *)measure 
-		withExistingNote:(NoteBase *)existingNote toEndpoint:(MIDIEndpointRef)endpoint;
+- (void)playFeedbackNote:(NoteBase *)note atPosition:(float)pos inMeasure:(Measure *)measure
+        withExistingNote:(NoteBase *)existingNote toEndpoint:(MIDIEndpointRef)endpoint;
 - (void)stopPlaying;
+
+- (Repeat *)repeatStartingAt:(int)measureIndex;
+- (Repeat *)repeatEndingAt:(int)measureIndex;
 
 - (NSData *)asMIDIData;
 - (NSData *)asLilypond;

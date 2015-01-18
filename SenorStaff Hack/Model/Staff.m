@@ -27,7 +27,7 @@
         Measure *firstMeasure = [[Measure alloc] initWithStaff:self];
         [firstMeasure setClef:[Clef trebleClef]];
         [firstMeasure setKeySignature:[KeySignature getSignatureWithFlats:0 minor:NO]];
-        measures = [[NSMutableArray arrayWithObject:firstMeasure] retain];
+        measures = [NSMutableArray arrayWithObject:firstMeasure];
         song = _song;
         canMute = YES;
     }
@@ -56,8 +56,7 @@
 
 - (void)setName:(NSString *)_name {
     if (![name isEqualToString:_name]) {
-        [name release];
-        name = [_name retain];
+        name = _name;
     }
 }
 
@@ -76,8 +75,7 @@
 
 - (void)setMeasures:(NSMutableArray *)_measures {
     if (![measures isEqual:_measures]) {
-        [measures release];
-        measures = [_measures retain];
+        measures = _measures;
     }
 }
 
@@ -101,13 +99,13 @@
 }
 
 - (IBAction)deleteSelf:(id)sender {
-    [rulerView removeFromSuperview];
+    //  [rulerView removeFromSuperview];
     [song removeStaff:self];
 }
 
 - (DrumKit *)drumKit {
     if (drumKit == nil) {
-        drumKit = [[[DrumKit standardKit] copy] retain];
+        drumKit = [[DrumKit standardKit] copy];
         [drumKit setStaff:self];
     }
     return drumKit;
@@ -230,7 +228,7 @@
         int i;
         for (i = 0; i < [[measure getNotes] count]; i++) {
             NoteBase *currNote = [[measure getNotes] objectAtIndex:i];
-            if (currNote == note || ([currNote isKindOfClass:[Chord class]] && [[currNote getNotes] containsObject:note])) {
+            if (currNote == note || ([currNote isKindOfClass:[Chord class]] && [[(Chord *)currNote getNotes] containsObject:note])) {
                 return measure;
             }
         }
@@ -274,26 +272,26 @@
 
 - (Note *)findPreviousNoteMatching:(Note *)source inMeasure:(Measure *)measure {
     if ([measure getFirstNote] == source ||
-        ([[measure getFirstNote] isKindOfClass:[Chord class]] && [[[measure getFirstNote] getNotes] containsObject:source])) {
+        ([[measure getFirstNote] isKindOfClass:[Chord class]] && [[(Chord *)[measure getFirstNote] getNotes] containsObject:source])) {
         Measure *prevMeasure = [[measure getStaff] getMeasureBefore:measure];
         if (prevMeasure != nil) {
             NoteBase *note = [[prevMeasure getNotes] lastObject];
-            if ([note respondsToSelector:@selector(pitchMatches:)] && [note pitchMatches:source]) {
+            if ([note respondsToSelector:@selector(pitchMatches:)] && [(Note *)note pitchMatches:source]) {
                 return note;
             }
             if ([note isKindOfClass:[Chord class]]) {
-                return [note getNoteMatching:source];
+                return [(Chord *)note getNoteMatching:source];
             }
         }
         return nil;
     }
     else {
         NoteBase *note = [measure getNoteBefore:source];
-        if ([note respondsToSelector:@selector(pitchMatches:)] && [note pitchMatches:source]) {
-            return note;
+        if ([note respondsToSelector:@selector(pitchMatches:)] && [(Note *)note pitchMatches:source]) {
+            return (Note *)note;
         }
         if ([note isKindOfClass:[Chord class]]) {
-            return [note getNoteMatching:source];
+            return [(Chord *)note getNoteMatching:source];
         }
         return nil;
     }
@@ -645,12 +643,9 @@
 }
 
 - (void)dealloc {
-    [measures release];
-    [drumKit release];
     measures = nil;
     drumKit = nil;
     song = nil;
-    [super dealloc];
 }
 
 //- (Class)getViewClass {

@@ -39,8 +39,7 @@
 
 - (void)setSong:(Song *)_song {
     if (![song isEqual:_song]) {
-        [song release];
-        song = [_song retain];
+        song = _song;
         [song setDocument:self];
     }
 }
@@ -86,9 +85,10 @@
 }
 
 - (void)printShowingPrintPanel:(BOOL)showPanels {
-    NSPrintOperation *op = [NSPrintOperation printOperationWithView:[windowController view] printInfo:[self printInfo]];
-    [op setShowPanels:showPanels];
-    [self runModalPrintOperation:op delegate:nil didRunSelector:nil contextInfo:nil];
+    NSLog(@"windowController");
+    //    NSPrintOperation *op = [NSPrintOperation printOperationWithView:[windowController view] printInfo:[self printInfo]];
+    //    [op setShowPanels:showPanels];
+    //    [self runModalPrintOperation:op delegate:nil didRunSelector:nil contextInfo:nil];
 }
 
 - (IBAction)goToHomepage:(id)sender {

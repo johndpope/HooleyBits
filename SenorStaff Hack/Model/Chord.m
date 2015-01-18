@@ -17,7 +17,7 @@
 - (id)initWithStaff:(Staff *)_staff {
     if (self = [super init]) {
         staff = _staff;
-        notes = [[NSMutableArray arrayWithCapacity:3] retain];
+        notes = [NSMutableArray arrayWithCapacity:3];
     }
     return self;
 }
@@ -25,7 +25,7 @@
 - (id)initWithStaff:(Staff *)_staff withNotes:(NSMutableArray *)_notes {
     if (self = [super init]) {
         staff = _staff;
-        notes = [[NSMutableArray arrayWithArray:_notes] retain];
+        notes = [NSMutableArray arrayWithArray:_notes];
     }
     return self;
 }
@@ -33,7 +33,7 @@
 - (id)initWithStaff:(Staff *)_staff withNotes:(NSArray *)_notes copyItems:(BOOL)_copyItems {
     if (self = [super init]) {
         staff = _staff;
-        notes = [[[NSMutableArray alloc] initWithArray:_notes copyItems:_copyItems] retain];
+        notes = [[NSMutableArray alloc] initWithArray:_notes copyItems:_copyItems];
     }
     return self;
 }
@@ -113,7 +113,7 @@
 - (NSArray *)subtractDuration:(float)maxDuration {
     @try {
         NSArray *remainingNotes  = [[notes collect] subtractDuration:maxDuration];
-        NSMutableArray *remainingChords = [[NSMutableArray arrayWithCapacity:[remainingNotes count]] autorelease];
+        NSMutableArray *remainingChords = [NSMutableArray arrayWithCapacity:[remainingNotes count]];
         int i;
         for (i = 0; i < [[remainingNotes objectAtIndex:0] count]; i++) {
             NSMutableArray *newChordNotes = [NSMutableArray array];
@@ -124,7 +124,7 @@
                     [newChordNotes addObject:[noteArr objectAtIndex:i]];
                 }
             }
-            [remainingChords addObject:[[[Chord alloc] initWithStaff:staff withNotes:newChordNotes] autorelease]];
+            [remainingChords addObject:[[Chord alloc] initWithStaff:staff withNotes:newChordNotes]];
         }
         return remainingChords;
     }
@@ -189,8 +189,7 @@
 - (void)setNotes:(NSMutableArray *)_notes {
     [self prepUndo];
     if (![notes isEqual:_notes]) {
-        [notes release];
-        notes = [_notes retain];
+        notes = _notes;
     }
     [self sendChangeNotification];
 }
@@ -206,7 +205,7 @@
         [note setDotted:[self getDotted]];
     }
     if ([note respondsToSelector:@selector(getNotes)]) {
-        [[notes doSelf] addObject:[[note getNotes] each]];
+        [[notes doSelf] addObject:[[(Chord *)note getNotes] each]];
     }
     else {
         [notes addObject:note];
@@ -321,9 +320,7 @@
 //}
 
 - (void)dealloc {
-    [notes release];
     notes = nil;
-    [super dealloc];
 }
 
 @end

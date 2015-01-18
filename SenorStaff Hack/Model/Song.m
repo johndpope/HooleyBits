@@ -32,11 +32,11 @@ int enableMIDI = 1;
 - (id)initWithDocument:(MusicDocument *)_doc {
     if ((self = [super init])) {
         doc = _doc;
-        tempoData = [[NSMutableArray arrayWithObject:[[TempoData alloc] initWithTempo:120 withSong:self]] retain];
-        staffs = [[NSMutableArray arrayWithObject:[[Staff alloc] initWithSong:self]] retain];
-        [[staffs objectAtIndex:0] setName:@"Staff 1"];
-        timeSigs = [[NSMutableArray arrayWithObject:[TimeSignature timeSignatureWithTop:4 bottom:4]] retain];
-        repeats = [[NSMutableArray array] retain];
+        tempoData = [NSMutableArray arrayWithObject:[[TempoData alloc] initWithTempo:120 withSong:self]];
+        staffs = [NSMutableArray arrayWithObject:[[Staff alloc] initWithSong:self]];
+        [(Staff *)[staffs objectAtIndex:0] setName:@"Staff 1"];
+        timeSigs = [NSMutableArray arrayWithObject:[TimeSignature timeSignatureWithTop:4 bottom:4]];
+        repeats = [NSMutableArray array];
         playerPosition = -1;
         if (enableMIDI) {
             [self initMIDI];
@@ -93,8 +93,7 @@ int enableMIDI = 1;
 
 - (void)setDocument:(MusicDocument *)_document {
     if (![doc isEqual:_document]) {
-        [doc release];
-        doc = [_document retain];
+        doc = _document;
     }
 }
 
@@ -116,8 +115,7 @@ int enableMIDI = 1;
     [self prepUndo];
     [self willChangeValueForKey:@"staffs"];
     if (![staffs isEqual:_staffs]) {
-        [staffs release];
-        staffs = [_staffs retain];
+        staffs = _staffs;
     }
     [self didChangeValueForKey:@"staffs"];
 }
@@ -190,8 +188,7 @@ int enableMIDI = 1;
 
 - (void)setTempoData:(NSMutableArray *)_tempoData {
     if (![tempoData isEqual:_tempoData]) {
-        [tempoData release];
-        tempoData = [_tempoData retain];
+        tempoData = _tempoData;
     }
 }
 
@@ -201,8 +198,7 @@ int enableMIDI = 1;
 
 - (void)setTimeSigs:(NSMutableArray *)_timeSigs {
     if (![timeSigs isEqual:_timeSigs]) {
-        [timeSigs release];
-        timeSigs = [_timeSigs retain];
+        timeSigs = _timeSigs;
     }
 }
 
@@ -275,8 +271,8 @@ int enableMIDI = 1;
 }
 
 - (void)timeSigChangedAtIndex:(int)measureIndex top:(int)top bottom:(int)bottom secondTop:(int)secondTop secondBottom:(int)secondBottom {
-    TimeSignature *sig = [[[CompoundTimeSig alloc] initWithFirstSig:[TimeSignature timeSignatureWithTop:top bottom:bottom]
-                                                          secondSig:[TimeSignature timeSignatureWithTop:secondTop bottom:secondBottom]] autorelease];
+    TimeSignature *sig = [[CompoundTimeSig alloc] initWithFirstSig:[TimeSignature timeSignatureWithTop:top bottom:bottom]
+                                                         secondSig:[TimeSignature timeSignatureWithTop:secondTop bottom:secondBottom]];
     [self setTimeSignature:sig atIndex:measureIndex];
 }
 
@@ -285,10 +281,9 @@ int enableMIDI = 1;
 }
 
 - (void)setRepeats:(NSArray *)_repeats {
-    [[[self undoManager] prepareWithInvocationTarget:self] setRepeats:[repeats copy]];
+    [(Song *)[[self undoManager] prepareWithInvocationTarget:self] setRepeats:[repeats copy]];
     if (![repeats isEqual:_repeats]) {
-        [repeats release];
-        repeats = [_repeats retain];
+        repeats = _repeats;
     }
 }
 
@@ -339,8 +334,8 @@ int enableMIDI = 1;
 
 - (void)startNewRepeatAt:(int)measureIndex {
     if (![self repeatStartsAt:measureIndex]) {
-        [[[self undoManager] prepareWithInvocationTarget:self] setRepeats:[repeats copy]];
-        Repeat *repeat = [[[Repeat alloc] initWithSong:self] autorelease];
+        [(Song *)[[self undoManager] prepareWithInvocationTarget:self] setRepeats:[repeats copy]];
+        Repeat *repeat = [[Repeat alloc] initWithSong:self];
         [repeats addObject:repeat];
         [repeat setStartMeasure:measureIndex];
     }
@@ -367,7 +362,7 @@ int enableMIDI = 1;
 }
 
 - (void)removeRepeatStartingAt:(int)measureIndex {
-    [[[self undoManager] prepareWithInvocationTarget:self] setRepeats:[repeats copy]];
+    [(Song *)[[self undoManager] prepareWithInvocationTarget:self] setRepeats:[repeats copy]];
     Repeat *repeat = [self repeatStartingAt:measureIndex];
     [repeat countClose:nil];
     [repeats removeObject:repeat];
@@ -499,10 +494,10 @@ int enableMIDI = 1;
         NSLog(@"Cannot start music player.");
     }
     
-    musicPlayerPoll = [[NSTimer scheduledTimerWithTimeInterval:.02 target:self
-                                                      selector:@selector(pollMusicPlayer:)
-                                                      userInfo:nil
-                                                       repeats:YES] retain];
+    musicPlayerPoll = [NSTimer scheduledTimerWithTimeInterval:.02 target:self
+                                                     selector:@selector(pollMusicPlayer:)
+                                                     userInfo:nil
+                                                      repeats:YES];
 }
 
 - (void)playToEndpoint:(MIDIEndpointRef)endpoint {
@@ -512,7 +507,6 @@ int enableMIDI = 1;
 - (void)stopPlaying {
     if (musicPlayerPoll != nil) {
         [musicPlayerPoll invalidate];
-        [musicPlayerPoll release];
         musicPlayerPoll = nil;
     }
     playerPosition = -1;
@@ -616,7 +610,7 @@ int enableMIDI = 1;
         }
         [self setTempoData:[coder decodeObjectForKey:@"tempoData"]];
         NSArray *_sigs = [coder decodeObjectForKey:@"timeSigs"];
-        timeSigs = [[[TimeSignature collectSelf] fromNSNumberArray:[_sigs each]] retain];
+        timeSigs = [[TimeSignature collectSelf] fromNSNumberArray:[_sigs each]];
         [self refreshTimeSigs];
         [self setRepeats:[coder decodeObjectForKey:@"repeats"]];
         playerPosition = -1;
@@ -626,15 +620,10 @@ int enableMIDI = 1;
 }
 
 - (void)dealloc {
-    [staffs release];
-    [tempoData release];
-    [timeSigs release];
-    [repeats release];
     staffs = nil;
     tempoData = nil;
     timeSigs = nil;
     repeats = nil;
-    [super dealloc];
 }
 
 - (NSString *)description {

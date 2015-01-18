@@ -11,11 +11,10 @@
 @class SimpleSong;
 
 @interface SongPlayer : NSObject {
-
-	SimpleSong *_songToPlay;
+    SimpleSong *__weak _songToPlay;
 }
 
-@property (assign) SimpleSong *songToPlay;
+@property (weak) SimpleSong *songToPlay;
 
 - (id)initWithSong:(SimpleSong *)value;
 - (void)play;

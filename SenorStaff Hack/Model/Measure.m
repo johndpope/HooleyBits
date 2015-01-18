@@ -25,7 +25,7 @@
 
 - (id)initWithStaff:(Staff *)_staff {
     if ((self = [super init])) {
-        notes = [[NSMutableArray array] retain];
+        notes = [[NSMutableArray alloc] init];
         staff = _staff;
         cachedNoteGroups = nil;
     }
@@ -33,7 +33,6 @@
 }
 
 - (void)clearCaches {
-    [cachedNoteGroups release];
     cachedNoteGroups = nil;
 }
 
@@ -65,8 +64,7 @@
     [self clearCaches];
     [self prepUndo];
     if (![notes isEqual:_notes]) {
-        [notes release];
-        notes = [_notes retain];
+        notes = _notes;
         [staff cleanEmptyMeasures];
     }
     [self sendChangeNotification];
@@ -325,21 +323,22 @@
     [self clearCaches];
     NoteBase *note = [notes objectAtIndex:index];
     if ([note isKindOfClass:[Chord class]]) {
-        [note addNote:newNote];
+        [(Chord *)note addNote:newNote];
     }
     else {
         [newNote setDuration:[note getDuration]];
         [newNote setDotted:[note getDotted]];
         NSMutableArray *chordNotes = [NSMutableArray arrayWithObjects:note, newNote, nil];
-        Chord *chord = [[[Chord alloc] initWithStaff:staff withNotes:chordNotes] autorelease];
+        Chord *chord = [[Chord alloc] initWithStaff:staff withNotes:chordNotes];
         [notes replaceObjectAtIndex:index withObject:chord];
     }
 }
 
 - (void)removeNote:(NoteBase *)note fromChordAtIndex:(float)index {
     [self clearCaches];
-    NoteBase *chord = [notes objectAtIndex:index];
-    if ([chord isKindOfClass:[Chord class]]) {
+    NoteBase *chord1 = [notes objectAtIndex:index];
+    if ([chord1 isKindOfClass:[Chord class]]) {
+        Chord *chord = (Chord *)chord1;
         if ([[chord getNotes] containsObject:note]) {
             if ([[chord getNotes] count] > 2) {
                 [chord removeNote:note];
@@ -427,7 +426,7 @@
     if ([group count] > 1) {
         [groups addObject:group];
     }
-    cachedNoteGroups = [groups retain];
+    cachedNoteGroups = groups;
     return groups;
 }
 
@@ -497,8 +496,7 @@
 - (void)setClef:(Clef *)_clef {
     if (![clef isEqual:_clef]) {
         [[[self undoManager] prepareWithInvocationTarget:self] setClef:clef];
-        [clef release];
-        clef = [_clef retain];
+        clef = _clef;
         [self sendChangeNotification];
     }
 }
@@ -514,8 +512,7 @@
 - (void)setKeySignature:(KeySignature *)_sig {
     if (![keySig isEqual:_sig]) {
         [[[self undoManager] prepareWithInvocationTarget:self] setKeySignature:keySig];
-        [keySig release];
-        keySig = [_sig retain];
+        keySig = _sig;
         [self updateKeySigPanel];
         [self sendChangeNotification];
     }
@@ -702,10 +699,10 @@
 }
 
 - (IBAction)keySigClose:(id)sender {
-    [keySigPanel setHidden:YES withFade:YES blocking:(sender != nil)];
-    if ([keySigPanel superview] != nil) {
-        [keySigPanel removeFromSuperview];
-    }
+    //    [keySigPanel setHidden:YES withFade:YES blocking:(sender != nil)];
+    //    if ([keySigPanel superview] != nil) {
+    //        [keySigPanel removeFromSuperview];
+    //    }
 }
 
 - (void)updateKeySigPanel {
@@ -765,28 +762,28 @@
 }
 
 - (IBAction)timeSigClose:(id)sender {
-    [timeSigPanel setHidden:YES withFade:YES blocking:(sender != nil)];
-    if ([timeSigPanel superview] != nil) {
-        [timeSigPanel removeFromSuperview];
-    }
+    //    [timeSigPanel setHidden:YES withFade:YES blocking:(sender != nil)];
+    //    if ([timeSigPanel superview] != nil) {
+    //        [timeSigPanel removeFromSuperview];
+    //    }
 }
 
 - (IBAction)timeSigExpand:(id)sender {
-    [[self undoManager] setActionName:@"changing time signature"];
-    NSRect frame = [timeSigPanel frame];
-    [timeSigPanel setFrame:NSMakeRect(frame.origin.x, frame.origin.y, 180, frame.size.height) blocking:NO];
-    [timeSigInnerClose setHidden:YES withFade:YES blocking:NO];
-    [timeSigExpand setHidden:YES withFade:YES blocking:NO];
-    [self processTimeSignatureChange:YES];
+    //    [[self undoManager] setActionName:@"changing time signature"];
+    //    NSRect frame = [timeSigPanel frame];
+    //    [timeSigPanel setFrame:NSMakeRect(frame.origin.x, frame.origin.y, 180, frame.size.height) blocking:NO];
+    //    [timeSigInnerClose setHidden:YES withFade:YES blocking:NO];
+    //    [timeSigExpand setHidden:YES withFade:YES blocking:NO];
+    //    [self processTimeSignatureChange:YES];
 }
 
 - (IBAction)timeSigCollapse:(id)sender {
-    [[self undoManager] setActionName:@"changing time signature"];
-    NSRect frame = [timeSigPanel frame];
-    [timeSigPanel setFrame:NSMakeRect(frame.origin.x, frame.origin.y, 90, frame.size.height) blocking:NO];
-    [timeSigInnerClose setHidden:NO withFade:YES blocking:NO];
-    [timeSigExpand setHidden:NO withFade:YES blocking:NO];
-    [self processTimeSignatureChange:NO];
+    //    [[self undoManager] setActionName:@"changing time signature"];
+    //    NSRect frame = [timeSigPanel frame];
+    //    [timeSigPanel setFrame:NSMakeRect(frame.origin.x, frame.origin.y, 90, frame.size.height) blocking:NO];
+    //    [timeSigInnerClose setHidden:NO withFade:YES blocking:NO];
+    //    [timeSigExpand setHidden:NO withFade:YES blocking:NO];
+    //    [self processTimeSignatureChange:NO];
 }
 
 - (void)updateTimeSigPanel {
@@ -811,7 +808,7 @@
     for (i = 0; i < pos; i++) {
         NoteBase *note = [notes objectAtIndex:i];
         if ([note respondsToSelector:@selector(getEffectivePitchWithKeySignature:priorAccidentals:)]) {
-            [note getEffectivePitchWithKeySignature:keySig priorAccidentals:accidentals];
+            [(Chord *)note getEffectivePitchWithKeySignature:keySig priorAccidentals:accidentals];
         }
     }
     return accidentals;
@@ -951,17 +948,11 @@
 }
 
 - (void)dealloc {
-    [clef release];
-    [keySig release];
-    [notes release];
-    [anim release];
-    [cachedNoteGroups release];
     clef = nil;
     keySig = nil;
     notes = nil;
     anim = nil;
     cachedNoteGroups = nil;
-    [super dealloc];
 }
 
 //- (Class)getViewClass {

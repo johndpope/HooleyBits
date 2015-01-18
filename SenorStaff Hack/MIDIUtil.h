@@ -11,7 +11,6 @@
 @class Song, SimpleSong;
 
 @interface MIDIUtil : NSObject {
-
 }
 
 //+ (NSData *)writeSequenceToData:(MusicSequence)seq;
@@ -19,5 +18,5 @@
 + (void)parseMidiData:(NSData *)data intoSong:(SimpleSong *)song;
 
 + (void)readSong:(SimpleSong *)song fromMIDI:(NSData *)data;
-
++ (NSData *)writeSequenceToData:(MusicSequence)seq;
 @end

@@ -11,7 +11,7 @@
 @class Staff;
 
 @interface Chord : NoteBase <NSCopying> {
-	NSMutableArray *notes;
+    NSMutableArray *notes;
 }
 
 - (id)initWithStaff:(Staff *)_staff;
@@ -26,5 +26,5 @@
 - (void)removeNote:(NoteBase *)note;
 
 - (NoteBase *)getNoteMatching:(NoteBase *)note;
-
+- (int)getEffectivePitchWithKeySignature:(KeySignature *)keySig priorAccidentals:(NSMutableDictionary *)accidentals;
 @end

@@ -43,23 +43,23 @@
 }
 
 - (NSView *)tempoPanel {
-    return tempoPanel;
+    return nil;
 }
 
 - (void)refreshTempo {
     if (tempo > 0) {
         [tempoText setFloatValue:tempo];
-        [tempoPanel setShouldFade:NO];
-        [tempoPanel setHidden:NO];
+        //[tempoPanel setShouldFade:NO];
+        //        [tempoPanel setHidden:NO];
     }
     else {
         [tempoText setStringValue:@""];
-        [tempoPanel setShouldFade:YES];
+        //  [tempoPanel setShouldFade:YES];
     }
 }
 
 - (void)removePanel {
-    [tempoPanel removeFromSuperview];
+    //   [tempoPanel removeFromSuperview];
 }
 
 - (IBAction)tempoChanged:(id)sender {

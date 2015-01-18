@@ -86,7 +86,7 @@
 }
 
 - (IBAction)countClose:(id)sender{
-	[countPanel setHidden:YES withFade:YES blocking:(sender != nil)];
+//	[countPanel setHidden:YES withFade:YES blocking:(sender != nil)];
 	if([countPanel superview] != nil){
 		[countPanel removeFromSuperview];
 	}	

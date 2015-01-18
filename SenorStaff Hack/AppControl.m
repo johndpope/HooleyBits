@@ -16,7 +16,7 @@
 #import "SongPlayer.h"
 #import "MidiLoader.h"
 #import <FScript/FScript.h>
-// using namespace std;
+#import "MIDIUtil.h"
 
 //#include "allegro.h"
 
@@ -30,25 +30,22 @@ static AppControl *cachedAppControl;
     return cachedAppControl;
 }
 
-- (void)dealloc {
-    [testDoc release];
-    [super dealloc];
-}
-
 #warning ! Tell don't ask!
 - (void)awakeFromNib {
     cachedAppControl = self;
     
     /* load FScript */
-    [[NSApp mainMenu] addItem:[[[FScriptMenuItem alloc] init] autorelease]];
+    [[NSApp mainMenu] addItem:[[FScriptMenuItem alloc] init]];
     
     if (NSClassFromString(@"SimpleNoteTests") == nil) {
-        MidiLoader *ml = [MidiLoader midiLoader];
-        [ml prepareDefaultFile];
+        NSString *testMidiFile = [[NSBundle mainBundle] pathForResource:@"apprhythmsvol1y2r1" ofType:@"mid"];
+        NSAssert(testMidiFile != nil, @"File not found");
+        NSData *_midiData = [NSData dataWithContentsOfFile:testMidiFile];
+        
         
         testDoc = [[MusicDocument alloc] init];
-        SimpleSong *emptySong = [[[SimpleSong alloc] init] autorelease];
-        [ml addDataToSong:emptySong];
+        Song *emptySong = [[Song alloc] init];
+        [MIDIUtil readSong:emptySong fromMIDI:_midiData];
         
         //testDoc.song = emptySong;
         

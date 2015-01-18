@@ -14,8 +14,8 @@
 
 - (id)initWithFirstSig:(TimeSignature *)_firstSig secondSig:(TimeSignature *)_secondSig {
     if (self = [super init]) {
-        firstSig = [_firstSig retain];
-        secondSig = [_secondSig retain];
+        firstSig = _firstSig;
+        secondSig = _secondSig;
     }
     return self;
 }
@@ -54,8 +54,8 @@
 + (id)fromNSNumberArray:(NSArray *)array {
     NSArray *firstArray = [array subarrayWithRange:NSMakeRange(0, 2)],
     *secondArray = [array subarrayWithRange:NSMakeRange(2, 2)];
-    return [[[self alloc] initWithFirstSig:[TimeSignature fromNSNumberArray:firstArray]
-                                 secondSig:[TimeSignature fromNSNumberArray:secondArray]] autorelease];
+    return [[self alloc] initWithFirstSig:[TimeSignature fromNSNumberArray:firstArray]
+                                secondSig:[TimeSignature fromNSNumberArray:secondArray]];
 }
 
 + (NSArray *)asNSNumberArray:(id)sig {
@@ -63,11 +63,8 @@
 }
 
 - (void)dealloc {
-    [firstSig release];
-    [secondSig release];
     firstSig = nil;
     secondSig = nil;
-    [super dealloc];
 }
 
 //- (Class)getViewClass {

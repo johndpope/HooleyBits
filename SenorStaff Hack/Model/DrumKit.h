@@ -11,13 +11,13 @@
 @class Staff;
 
 @interface DrumKit : Clef {
-	NSMutableArray *drums;
-	Staff *staff;
-	
-	IBOutlet NSWindow *editDialog;
+    NSMutableArray *drums;
+    Staff *staff;
+    
+    IBOutlet NSWindow *editDialog;
 }
 
-- (id) initWithPitches:(NSArray *)_pitches octaves:(NSArray *)_octaves names:(NSArray *)_names;
+- (id)initWithPitches:(NSArray *)_pitches octaves:(NSArray *)_octaves names:(NSArray *)_names;
 
 - (NSString *)nameAt:(int)position;
 
@@ -40,5 +40,6 @@
 - (NSString *)musicXMLStringForPitch:(int)pitch octave:(int)octave;
 
 + (DrumKit *)standardKit;
+- (NSString *)lilypondStringForPitch:(int)pitch octave:(int)octave;
 
 @end

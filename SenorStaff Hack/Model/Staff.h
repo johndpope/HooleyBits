@@ -20,16 +20,16 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 @interface Staff : NSObject <NSCoding> {
-	NSMutableArray *measures;
-	Song *song;
-	NSString *name;
-	int transposition;
-	int channel;
-	IBOutlet StaffVerticalRulerComponent *rulerView;
-	BOOL mute, solo, canMute;
-	DrumKit *drumKit;
-	
-	MusicTrack musicTrack;
+    NSMutableArray *measures;
+    Song *song;
+    NSString *name;
+    int transposition;
+    int channel;
+    IBOutlet StaffVerticalRulerComponent *rulerView;
+    BOOL mute, solo, canMute;
+    DrumKit *drumKit;
+    
+    MusicTrack musicTrack;
 }
 
 - (id)initWithSong:(Song *)_song;
@@ -76,6 +76,7 @@
 - (void)removeLastNote;
 
 - (void)cleanPanels;
+- (int)realChannel;
 
 - (BOOL)isDrums;
 - (void)setIsDrums:(BOOL)isDrums;
@@ -101,6 +102,8 @@
 - (float)addTrackToMIDISequence:(MusicSequence *)musicSequence notesToPlay:(id)selection;
 - (void)addToLilypondString:(NSMutableString *)string;
 - (void)addToMusicXMLString:(NSMutableString *)string;
+- (NSUndoManager *)undoManager;
+- (void)setName:(NSString *)_name;
 
 - (Class)getViewClass;
 - (Class)getControllerClass;

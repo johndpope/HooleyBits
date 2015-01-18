@@ -10,11 +10,10 @@
 
 @class MusicDocument;
 @interface AppControl : NSObject {
-
     MusicDocument *testDoc;
 }
 
-@property (assign) MusicDocument *testDoc;
+@property MusicDocument *testDoc;
 
 + (AppControl *)cachedAppControl;
 

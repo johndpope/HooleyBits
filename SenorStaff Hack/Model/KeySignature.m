@@ -138,10 +138,10 @@ static int flatVisLocs[7] = { 4, 7, 3, 6, 2, 5, 1 };
     static NSMutableDictionary *cachedMajorSharps;
     static NSMutableDictionary *cachedMinorSharps;
     if (nil == cachedMajorSharps) {
-        cachedMajorSharps = [[NSMutableDictionary dictionaryWithCapacity:8] retain];
+        cachedMajorSharps = [NSMutableDictionary dictionaryWithCapacity:8];
     }
     if (nil == cachedMinorSharps) {
-        cachedMinorSharps = [[NSMutableDictionary dictionaryWithCapacity:8] retain];
+        cachedMinorSharps = [NSMutableDictionary dictionaryWithCapacity:8];
     }
     NSMutableDictionary *cachedSharps = _minor ? cachedMinorSharps : cachedMajorSharps;
     id sig = [cachedSharps objectForKey:[NSNumberPool number:sharps]];
@@ -154,7 +154,7 @@ static int flatVisLocs[7] = { 4, 7, 3, 6, 2, 5, 1 };
         for (i = 0; i < sharps; i++) {
             pitches[sharpLocs[i]]++;
         }
-        sig = [[[KeySignature alloc] initWithPitches:pitches sharps:sharps flats:0 minor:_minor] autorelease];
+        sig = [[KeySignature alloc] initWithPitches:pitches sharps:sharps flats:0 minor:_minor];
         [cachedSharps setObject:sig forKey:[NSNumberPool number:sharps]];
     }
     return sig;
@@ -164,10 +164,10 @@ static int flatVisLocs[7] = { 4, 7, 3, 6, 2, 5, 1 };
     static NSMutableDictionary *cachedMajorFlats;
     static NSMutableDictionary *cachedMinorFlats;
     if (nil == cachedMajorFlats) {
-        cachedMajorFlats = [[NSMutableDictionary dictionaryWithCapacity:8] retain];
+        cachedMajorFlats = [NSMutableDictionary dictionaryWithCapacity:8];
     }
     if (nil == cachedMinorFlats) {
-        cachedMinorFlats = [[NSMutableDictionary dictionaryWithCapacity:8] retain];
+        cachedMinorFlats = [NSMutableDictionary dictionaryWithCapacity:8];
     }
     NSMutableDictionary *cachedFlats = _minor ? cachedMinorFlats : cachedMajorFlats;
     id sig = [cachedFlats objectForKey:[NSNumberPool number:flats]];
@@ -180,7 +180,7 @@ static int flatVisLocs[7] = { 4, 7, 3, 6, 2, 5, 1 };
         for (i = 0; i < flats; i++) {
             pitches[flatLocs[i]]--;
         }
-        sig = [[[KeySignature alloc] initWithPitches:pitches sharps:0 flats:flats minor:_minor] autorelease];
+        sig = [[KeySignature alloc] initWithPitches:pitches sharps:0 flats:flats minor:_minor];
         [cachedFlats setObject:sig forKey:[NSNumberPool number:flats]];
     }
     return sig;
@@ -266,7 +266,7 @@ static int flatVisLocs[7] = { 4, 7, 3, 6, 2, 5, 1 };
     NSMutableArray *sharpsArray = [NSMutableArray arrayWithCapacity:sharps];
     int i;
     for (i = 0; i < sharps; i++) {
-        [sharpsArray addObject:[[[NSNumber alloc] initWithInt:(sharpVisLocs[i] + [clef getKeySigOffset])] autorelease]];
+        [sharpsArray addObject:[[NSNumber alloc] initWithInt:(sharpVisLocs[i] + [clef getKeySigOffset])]];
     }
     return sharpsArray;
 }
@@ -275,7 +275,7 @@ static int flatVisLocs[7] = { 4, 7, 3, 6, 2, 5, 1 };
     NSMutableArray *flatsArray = [NSMutableArray arrayWithCapacity:flats];
     int i;
     for (i = 0; i < flats; i++) {
-        [flatsArray addObject:[[[NSNumber alloc] initWithInt:(flatVisLocs[i] + [clef getKeySigOffset])] autorelease]];
+        [flatsArray addObject:[[NSNumber alloc] initWithInt:(flatVisLocs[i] + [clef getKeySigOffset])]];
     }
     return flatsArray;
 }

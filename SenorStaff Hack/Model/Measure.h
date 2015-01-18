@@ -17,28 +17,28 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 @interface Measure : NSObject <NSCoding> {
-	Staff *staff;
-	Clef *clef;
-	KeySignature *keySig;
-	NSMutableArray *notes;
-	NSViewAnimation *anim;
-	
-	IBOutlet NSView *keySigPanel;
-	IBOutlet NSPopUpButton *keySigLetter;
-	IBOutlet NSPopUpButton *keySigMajMin;
-	IBOutlet NSButton *keySigTranspose;
-	
-	IBOutlet NSView *timeSigPanel;
-	IBOutlet NSTextField *timeSigTopText;
-	IBOutlet NSStepper *timeSigTopStep;
-	IBOutlet NSPopUpButton *timeSigBottom;
-	IBOutlet NSTextField *timeSigSecondTopText;
-	IBOutlet NSStepper *timeSigSecondTopStep;
-	IBOutlet NSPopUpButton *timeSigSecondBottom;
-	IBOutlet NSButton *timeSigInnerClose;
-	IBOutlet NSButton *timeSigExpand;
-	
-	NSArray *cachedNoteGroups;
+    Staff *staff;
+    Clef *clef;
+    KeySignature *keySig;
+    NSMutableArray *notes;
+    NSViewAnimation *anim;
+    
+    IBOutlet NSView *keySigPanel;
+    IBOutlet NSPopUpButton *keySigLetter;
+    IBOutlet NSPopUpButton *keySigMajMin;
+    IBOutlet NSButton *keySigTranspose;
+    
+    IBOutlet NSView *timeSigPanel;
+    IBOutlet NSTextField *timeSigTopText;
+    IBOutlet NSStepper *timeSigTopStep;
+    IBOutlet NSPopUpButton *timeSigBottom;
+    IBOutlet NSTextField *timeSigSecondTopText;
+    IBOutlet NSStepper *timeSigSecondTopStep;
+    IBOutlet NSPopUpButton *timeSigSecondBottom;
+    IBOutlet NSButton *timeSigInnerClose;
+    IBOutlet NSButton *timeSigExpand;
+    
+    NSArray *cachedNoteGroups;
 }
 
 - (id)initWithStaff:(Staff *)_staff;
@@ -126,10 +126,11 @@
 - (NSDictionary *)getAccidentalsAtPosition:(float)pos;
 
 - (float)addToMIDITrack:(MusicTrack *)musicTrack atPosition:(float)pos
-			  transpose:(int)transposition onChannel:(int)channel notesToPlay:(id)selection;
+              transpose:(int)transposition onChannel:(int)channel notesToPlay:(id)selection;
 - (void)addToLilypondString:(NSMutableString *)string;
 - (void)addToMusicXMLString:(NSMutableString *)string;
-
+- (NoteBase *)refreshNotes:(NoteBase *)rtn;
+- (void)grabNotesFromNextMeasure;
 - (Class)getViewClass;
 - (Class)getControllerClass;
 
