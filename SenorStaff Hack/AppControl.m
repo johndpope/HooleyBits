@@ -10,12 +10,12 @@
 //#import <iostream>
 //#import <fstream>
 #import "AppControl.h"
-#import <FScript/FScript.h>
+
 #import "MusicDocument.h"
 #import "SimpleSong.h"
 #import "SongPlayer.h"
 #import "MidiLoader.h"
-
+#import <FScript/FScript.h>
 // using namespace std;
 
 //#include "allegro.h"
@@ -27,37 +27,34 @@ static AppControl *cachedAppControl;
 @synthesize testDoc;
 
 + (AppControl *)cachedAppControl {
-    
     return cachedAppControl;
 }
 
 - (void)dealloc {
-	[testDoc release];
-	[super dealloc];
+    [testDoc release];
+    [super dealloc];
 }
 
-#warning! Tell don't ask!
+#warning ! Tell don't ask!
 - (void)awakeFromNib {
-
     cachedAppControl = self;
     
     /* load FScript */
-	[[NSApp mainMenu] addItem:[[[FScriptMenuItem alloc] init] autorelease]];
-
-	if(NSClassFromString(@"SimpleNoteTests")==nil)
-	{
-		MidiLoader *ml = [MidiLoader midiLoader];
-		[ml prepareDefaultFile];
-
-		testDoc = [[MusicDocument alloc] init];
-		SimpleSong *emptySong = [[[SimpleSong alloc] init] autorelease];
-		[ml addDataToSong:emptySong];
-		
-		testDoc.song = emptySong;
-			
-		SongPlayer *songPlayer = [[SongPlayer alloc] initWithSong:emptySong];
-		[songPlayer play];
-	}
+    [[NSApp mainMenu] addItem:[[[FScriptMenuItem alloc] init] autorelease]];
+    
+    if (NSClassFromString(@"SimpleNoteTests") == nil) {
+        MidiLoader *ml = [MidiLoader midiLoader];
+        [ml prepareDefaultFile];
+        
+        testDoc = [[MusicDocument alloc] init];
+        SimpleSong *emptySong = [[[SimpleSong alloc] init] autorelease];
+        [ml addDataToSong:emptySong];
+        
+        //testDoc.song = emptySong;
+        
+        SongPlayer *songPlayer = [[SongPlayer alloc] initWithSong:emptySong];
+        [songPlayer play];
+    }
 }
 
 @end

@@ -24,12 +24,12 @@ static const int RESOLUTION = 480;
 
 @implementation MIDIUtil
 
-//+ (void)writeBackwards:(char *)bytes length:(int)length to:(char *)dest{
-//	int i;
-//	for(i = 0; i < length; i++){
-//		dest[i] = bytes[length - 1 - i];
-//	}
-//}
++ (void)writeBackwards:(char *)bytes length:(int)length to:(char *)dest{
+	int i;
+	for(i = 0; i < length; i++){
+		dest[i] = bytes[length - 1 - i];
+	}
+}
 
 + (int)readIntFrom:(NSData *)data offset:(unsigned int)offset length:(unsigned int)length {
     

@@ -8,26 +8,38 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		730B39000E5F288100434DF5 /* NoteBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7860E5CA070003AE8A6 /* NoteBase.m */; };
+		5DD50D131A6B6F520012B2A1 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD50D111A6B6F520012B2A1 /* FScript.framework */; };
+		5DD50D141A6B6F520012B2A1 /* libportsmf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD50D121A6B6F520012B2A1 /* libportsmf.a */; };
+		5DD50D871A6BA3280012B2A1 /* Chord.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D621A6BA3280012B2A1 /* Chord.m */; };
+		5DD50D881A6BA3280012B2A1 /* ChromaticKeySignature.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D641A6BA3280012B2A1 /* ChromaticKeySignature.m */; };
+		5DD50D891A6BA3280012B2A1 /* Clef.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D661A6BA3280012B2A1 /* Clef.m */; };
+		5DD50D8A1A6BA3280012B2A1 /* CompoundTimeSig.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D681A6BA3280012B2A1 /* CompoundTimeSig.m */; };
+		5DD50D8B1A6BA3280012B2A1 /* Drum+Lilypond.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D6A1A6BA3280012B2A1 /* Drum+Lilypond.m */; };
+		5DD50D8C1A6BA3280012B2A1 /* Drum+MusicXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D6C1A6BA3280012B2A1 /* Drum+MusicXML.m */; };
+		5DD50D8D1A6BA3280012B2A1 /* Drum.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D6E1A6BA3280012B2A1 /* Drum.m */; };
+		5DD50D8E1A6BA3280012B2A1 /* DrumKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D701A6BA3280012B2A1 /* DrumKit.m */; };
+		5DD50D8F1A6BA3280012B2A1 /* KeySignature.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D721A6BA3280012B2A1 /* KeySignature.m */; };
+		5DD50D901A6BA3280012B2A1 /* Measure.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D741A6BA3280012B2A1 /* Measure.m */; };
+		5DD50D911A6BA3280012B2A1 /* MusicDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D761A6BA3280012B2A1 /* MusicDocument.m */; };
+		5DD50D921A6BA3280012B2A1 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D781A6BA3280012B2A1 /* Note.m */; };
+		5DD50D931A6BA3280012B2A1 /* NoteBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D7A1A6BA3280012B2A1 /* NoteBase.m */; };
+		5DD50D941A6BA3280012B2A1 /* Repeat.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D7C1A6BA3280012B2A1 /* Repeat.m */; };
+		5DD50D951A6BA3280012B2A1 /* Rest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D7E1A6BA3280012B2A1 /* Rest.m */; };
+		5DD50D961A6BA3280012B2A1 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D801A6BA3280012B2A1 /* Song.m */; };
+		5DD50D971A6BA3280012B2A1 /* Staff.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D821A6BA3280012B2A1 /* Staff.m */; };
+		5DD50D981A6BA3280012B2A1 /* TempoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D841A6BA3280012B2A1 /* TempoData.m */; };
+		5DD50D991A6BA3280012B2A1 /* TimeSignature.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D861A6BA3280012B2A1 /* TimeSignature.m */; };
+		5DD50D9C1A6BA4680012B2A1 /* NSNumberPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D9B1A6BA4680012B2A1 /* NSNumberPool.m */; };
+		5DD50E001A6BAAE90012B2A1 /* Chomp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD50DFF1A6BAAE90012B2A1 /* Chomp.framework */; };
 		730DEE070FF1789F001D9E33 /* MidiLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 730DEE060FF1789F001D9E33 /* MidiLoader.m */; };
 		7315FCD20FF2EA4F008D3CE1 /* MidiInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 7315FCD10FF2EA4F008D3CE1 /* MidiInterface.m */; };
 		736457B70E6BEC560022079A /* bars - 1 2 3 4.mid in Resources */ = {isa = PBXBuildFile; fileRef = 73FB73810E69FE8600AE64C2 /* bars - 1 2 3 4.mid */; };
-		73675B130FF42D5700B02E63 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F6DC0E5C9F60003AE8A6 /* FScript.framework */; };
 		7397F6D80E5C9F1A003AE8A6 /* AppControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F6D70E5C9F1A003AE8A6 /* AppControl.m */; };
-		7397F6DD0E5C9F60003AE8A6 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F6DC0E5C9F60003AE8A6 /* FScript.framework */; };
 		7397F76C0E5C9FF1003AE8A6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F7690E5C9FF1003AE8A6 /* AudioToolbox.framework */; };
 		7397F76D0E5C9FF1003AE8A6 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F76A0E5C9FF1003AE8A6 /* CoreAudio.framework */; };
 		7397F76E0E5C9FF1003AE8A6 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F76B0E5C9FF1003AE8A6 /* CoreMIDI.framework */; };
 		7397F7710E5C9FFD003AE8A6 /* MIDIUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7700E5C9FFD003AE8A6 /* MIDIUtil.m */; };
 		7397F7F40E5CA35A003AE8A6 /* Sor_Study.mid in Resources */ = {isa = PBXBuildFile; fileRef = 7397F7F30E5CA35A003AE8A6 /* Sor_Study.mid */; };
-		7397F8030E5CA9E6003AE8A6 /* MusicDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F8020E5CA9E6003AE8A6 /* MusicDocument.m */; };
-		7397F8110E5CAC33003AE8A6 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F77A0E5CA03A003AE8A6 /* Song.m */; };
-		7397F84C0E5CB25C003AE8A6 /* Staff.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F77D0E5CA045003AE8A6 /* Staff.m */; };
-		7397F8770E5CB702003AE8A6 /* Clef.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7C90E5CA1F6003AE8A6 /* Clef.m */; };
-		7397F87C0E5CB735003AE8A6 /* KeySignature.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F79C0E5CA0F9003AE8A6 /* KeySignature.m */; };
-		7397F8840E5CB783003AE8A6 /* Measure.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F78F0E5CA0A1003AE8A6 /* Measure.m */; };
-		7397F8FB0E5CC0FD003AE8A6 /* TimeSignature.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7800E5CA053003AE8A6 /* TimeSignature.m */; };
-		7397F9890E5CC541003AE8A6 /* ChromaticKeySignature.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F9880E5CC541003AE8A6 /* ChromaticKeySignature.m */; };
 		73B4CCCF0FF512C900949D15 /* SimpleNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EFB4530FEE5936001B7C96 /* SimpleNote.m */; };
 		73B4CD7B0FF51BD500949D15 /* SimpleSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EFB45A0FEE5958001B7C96 /* SimpleSong.m */; };
 		73B4CD7C0FF51BD900949D15 /* MidiLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 730DEE060FF1789F001D9E33 /* MidiLoader.m */; };
@@ -41,10 +53,6 @@
 		73B4CDAB0FF51F1900949D15 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F76A0E5C9FF1003AE8A6 /* CoreAudio.framework */; };
 		73B4CDAC0FF51F1A00949D15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F7690E5C9FF1003AE8A6 /* AudioToolbox.framework */; };
 		73B4CDAD0FF51F1E00949D15 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73C7F3210FF3890400DAB6E1 /* AudioUnit.framework */; };
-		73B71F180E5DEB630064F2BA /* TempoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7830E5CA05F003AE8A6 /* TempoData.m */; };
-		73B721B20E5E00570064F2BA /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7890E5CA083003AE8A6 /* Note.m */; };
-		73B721B50E5E00930064F2BA /* Chord.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7A30E5CA123003AE8A6 /* Chord.m */; };
-		73B721B70E5E00B90064F2BA /* Rest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F78C0E5CA095003AE8A6 /* Rest.m */; };
 		73BB3CAB0FED3F6B000C1262 /* SimpleNoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BB3CAA0FED3F6B000C1262 /* SimpleNoteTests.m */; };
 		73C7F3220FF3890400DAB6E1 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73C7F3210FF3890400DAB6E1 /* AudioUnit.framework */; };
 		73CA09200E77D2A0006D131C /* ring-12-0.mid in Resources */ = {isa = PBXBuildFile; fileRef = 73CA091F0E77D2A0006D131C /* ring-12-0.mid */; };
@@ -81,6 +89,49 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* SenorStaff Hack_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SenorStaff Hack_Prefix.pch"; sourceTree = "<group>"; };
+		5DD50D111A6B6F520012B2A1 /* FScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FScript.framework; sourceTree = "<group>"; };
+		5DD50D121A6B6F520012B2A1 /* libportsmf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libportsmf.a; sourceTree = "<group>"; };
+		5DD50D611A6BA3280012B2A1 /* Chord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chord.h; sourceTree = "<group>"; };
+		5DD50D621A6BA3280012B2A1 /* Chord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chord.m; sourceTree = "<group>"; };
+		5DD50D631A6BA3280012B2A1 /* ChromaticKeySignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChromaticKeySignature.h; sourceTree = "<group>"; };
+		5DD50D641A6BA3280012B2A1 /* ChromaticKeySignature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChromaticKeySignature.m; sourceTree = "<group>"; };
+		5DD50D651A6BA3280012B2A1 /* Clef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clef.h; sourceTree = "<group>"; };
+		5DD50D661A6BA3280012B2A1 /* Clef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Clef.m; sourceTree = "<group>"; };
+		5DD50D671A6BA3280012B2A1 /* CompoundTimeSig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompoundTimeSig.h; sourceTree = "<group>"; };
+		5DD50D681A6BA3280012B2A1 /* CompoundTimeSig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompoundTimeSig.m; sourceTree = "<group>"; };
+		5DD50D691A6BA3280012B2A1 /* Drum+Lilypond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Drum+Lilypond.h"; sourceTree = "<group>"; };
+		5DD50D6A1A6BA3280012B2A1 /* Drum+Lilypond.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Drum+Lilypond.m"; sourceTree = "<group>"; };
+		5DD50D6B1A6BA3280012B2A1 /* Drum+MusicXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Drum+MusicXML.h"; sourceTree = "<group>"; };
+		5DD50D6C1A6BA3280012B2A1 /* Drum+MusicXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Drum+MusicXML.m"; sourceTree = "<group>"; };
+		5DD50D6D1A6BA3280012B2A1 /* Drum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drum.h; sourceTree = "<group>"; };
+		5DD50D6E1A6BA3280012B2A1 /* Drum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Drum.m; sourceTree = "<group>"; };
+		5DD50D6F1A6BA3280012B2A1 /* DrumKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrumKit.h; sourceTree = "<group>"; };
+		5DD50D701A6BA3280012B2A1 /* DrumKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrumKit.m; sourceTree = "<group>"; };
+		5DD50D711A6BA3280012B2A1 /* KeySignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeySignature.h; sourceTree = "<group>"; };
+		5DD50D721A6BA3280012B2A1 /* KeySignature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeySignature.m; sourceTree = "<group>"; };
+		5DD50D731A6BA3280012B2A1 /* Measure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Measure.h; sourceTree = "<group>"; };
+		5DD50D741A6BA3280012B2A1 /* Measure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Measure.m; sourceTree = "<group>"; };
+		5DD50D751A6BA3280012B2A1 /* MusicDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicDocument.h; sourceTree = "<group>"; };
+		5DD50D761A6BA3280012B2A1 /* MusicDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicDocument.m; sourceTree = "<group>"; };
+		5DD50D771A6BA3280012B2A1 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
+		5DD50D781A6BA3280012B2A1 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		5DD50D791A6BA3280012B2A1 /* NoteBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteBase.h; sourceTree = "<group>"; };
+		5DD50D7A1A6BA3280012B2A1 /* NoteBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteBase.m; sourceTree = "<group>"; };
+		5DD50D7B1A6BA3280012B2A1 /* Repeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Repeat.h; sourceTree = "<group>"; };
+		5DD50D7C1A6BA3280012B2A1 /* Repeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Repeat.m; sourceTree = "<group>"; };
+		5DD50D7D1A6BA3280012B2A1 /* Rest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rest.h; sourceTree = "<group>"; };
+		5DD50D7E1A6BA3280012B2A1 /* Rest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rest.m; sourceTree = "<group>"; };
+		5DD50D7F1A6BA3280012B2A1 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
+		5DD50D801A6BA3280012B2A1 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
+		5DD50D811A6BA3280012B2A1 /* Staff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Staff.h; sourceTree = "<group>"; };
+		5DD50D821A6BA3280012B2A1 /* Staff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Staff.m; sourceTree = "<group>"; };
+		5DD50D831A6BA3280012B2A1 /* TempoData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TempoData.h; sourceTree = "<group>"; };
+		5DD50D841A6BA3280012B2A1 /* TempoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TempoData.m; sourceTree = "<group>"; };
+		5DD50D851A6BA3280012B2A1 /* TimeSignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeSignature.h; sourceTree = "<group>"; };
+		5DD50D861A6BA3280012B2A1 /* TimeSignature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeSignature.m; sourceTree = "<group>"; };
+		5DD50D9A1A6BA4680012B2A1 /* NSNumberPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNumberPool.h; sourceTree = "<group>"; };
+		5DD50D9B1A6BA4680012B2A1 /* NSNumberPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberPool.m; sourceTree = "<group>"; };
+		5DD50DFF1A6BAAE90012B2A1 /* Chomp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Chomp.framework; sourceTree = SOURCE_ROOT; };
 		730DEE050FF1789F001D9E33 /* MidiLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiLoader.h; path = Src/MidiLoader.h; sourceTree = "<group>"; };
 		730DEE060FF1789F001D9E33 /* MidiLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MidiLoader.m; path = Src/MidiLoader.m; sourceTree = "<group>"; };
 		7315FCD00FF2EA4F008D3CE1 /* MidiInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiInterface.h; path = Src/MidiInterface.h; sourceTree = "<group>"; };
@@ -100,51 +151,18 @@
 		73675AF30FF42B9700B02E63 /* Target-Plugin.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Target-Plugin.xcconfig"; path = "/Code/Config/Target-Plugin.xcconfig"; sourceTree = "<absolute>"; };
 		7397F6D60E5C9F1A003AE8A6 /* AppControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppControl.h; sourceTree = "<group>"; };
 		7397F6D70E5C9F1A003AE8A6 /* AppControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppControl.m; sourceTree = "<group>"; };
-		7397F6DC0E5C9F60003AE8A6 /* FScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FScript.framework; path = /Library/Frameworks/FScript.framework; sourceTree = "<absolute>"; };
 		7397F7690E5C9FF1003AE8A6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		7397F76A0E5C9FF1003AE8A6 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		7397F76B0E5C9FF1003AE8A6 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = /System/Library/Frameworks/CoreMIDI.framework; sourceTree = "<absolute>"; };
 		7397F76F0E5C9FFD003AE8A6 /* MIDIUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIDIUtil.h; sourceTree = "<group>"; };
 		7397F7700E5C9FFD003AE8A6 /* MIDIUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIDIUtil.m; sourceTree = "<group>"; };
-		7397F7790E5CA03A003AE8A6 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
-		7397F77A0E5CA03A003AE8A6 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
-		7397F77C0E5CA045003AE8A6 /* Staff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Staff.h; sourceTree = "<group>"; };
-		7397F77D0E5CA045003AE8A6 /* Staff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Staff.m; sourceTree = "<group>"; };
-		7397F77F0E5CA053003AE8A6 /* TimeSignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeSignature.h; sourceTree = "<group>"; };
-		7397F7800E5CA053003AE8A6 /* TimeSignature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeSignature.m; sourceTree = "<group>"; };
-		7397F7820E5CA05F003AE8A6 /* TempoData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TempoData.h; sourceTree = "<group>"; };
-		7397F7830E5CA05F003AE8A6 /* TempoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TempoData.m; sourceTree = "<group>"; };
-		7397F7850E5CA070003AE8A6 /* NoteBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteBase.h; sourceTree = "<group>"; };
-		7397F7860E5CA070003AE8A6 /* NoteBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteBase.m; sourceTree = "<group>"; };
-		7397F7880E5CA083003AE8A6 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
-		7397F7890E5CA083003AE8A6 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
-		7397F78B0E5CA095003AE8A6 /* Rest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rest.h; sourceTree = "<group>"; };
-		7397F78C0E5CA095003AE8A6 /* Rest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rest.m; sourceTree = "<group>"; };
-		7397F78E0E5CA0A1003AE8A6 /* Measure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Measure.h; sourceTree = "<group>"; };
-		7397F78F0E5CA0A1003AE8A6 /* Measure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Measure.m; sourceTree = "<group>"; };
-		7397F79B0E5CA0F9003AE8A6 /* KeySignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeySignature.h; sourceTree = "<group>"; };
-		7397F79C0E5CA0F9003AE8A6 /* KeySignature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeySignature.m; sourceTree = "<group>"; };
-		7397F79F0E5CA113003AE8A6 /* CompoundTimeSig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompoundTimeSig.h; sourceTree = "<group>"; };
-		7397F7A00E5CA113003AE8A6 /* CompoundTimeSig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompoundTimeSig.m; sourceTree = "<group>"; };
-		7397F7A20E5CA123003AE8A6 /* Chord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chord.h; sourceTree = "<group>"; };
-		7397F7A30E5CA123003AE8A6 /* Chord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chord.m; sourceTree = "<group>"; };
-		7397F7A50E5CA134003AE8A6 /* Repeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Repeat.h; sourceTree = "<group>"; };
-		7397F7A60E5CA134003AE8A6 /* Repeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Repeat.m; sourceTree = "<group>"; };
-		7397F7C80E5CA1F6003AE8A6 /* Clef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clef.h; sourceTree = "<group>"; };
-		7397F7C90E5CA1F6003AE8A6 /* Clef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Clef.m; sourceTree = "<group>"; };
 		7397F7F30E5CA35A003AE8A6 /* Sor_Study.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = Sor_Study.mid; sourceTree = "<group>"; };
-		7397F8010E5CA9E6003AE8A6 /* MusicDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicDocument.h; sourceTree = "<group>"; };
-		7397F8020E5CA9E6003AE8A6 /* MusicDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicDocument.m; sourceTree = "<group>"; };
-		7397F9870E5CC541003AE8A6 /* ChromaticKeySignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChromaticKeySignature.h; sourceTree = "<group>"; };
-		7397F9880E5CC541003AE8A6 /* ChromaticKeySignature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChromaticKeySignature.m; sourceTree = "<group>"; };
 		73B87E9E0E6985A6003C2410 /* SenorStaffTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SenorStaffTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		73B87E9F0E6985A6003C2410 /* SenorStaffTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SenorStaffTests-Info.plist"; sourceTree = "<group>"; };
 		73BB3CA50FED3F3B000C1262 /* SimpleSongTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleSongTests.m; path = Tests/SimpleSongTests.m; sourceTree = "<group>"; };
 		73BB3CAA0FED3F6B000C1262 /* SimpleNoteTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleNoteTests.m; path = Tests/SimpleNoteTests.m; sourceTree = "<group>"; };
 		73C7F3210FF3890400DAB6E1 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
 		73CA091F0E77D2A0006D131C /* ring-12-0.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = "ring-12-0.mid"; sourceTree = "<group>"; };
-		73CA09AE0E77E0D1006D131C /* libportsmf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libportsmf.a; path = ../../../Source_Code/portmedia/trunk/build/Debug/libportsmf.a; sourceTree = SOURCE_ROOT; };
-		73CA09B40E77E12C006D131C /* allegro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = allegro.h; path = ../../../Source_Code/portmedia/trunk/allegro.h; sourceTree = SOURCE_ROOT; };
 		73CA0AAA0E77E1BB006D131C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		73CA0AAB0E77E1BB006D131C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		73CA0AB60E77E1D9006D131C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
@@ -164,7 +182,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73675B130FF42D5700B02E63 /* FScript.framework in Frameworks */,
 				73B4CDAA0FF51F1800949D15 /* CoreMIDI.framework in Frameworks */,
 				73B4CDAB0FF51F1900949D15 /* CoreAudio.framework in Frameworks */,
 				73B4CDAC0FF51F1A00949D15 /* AudioToolbox.framework in Frameworks */,
@@ -177,11 +194,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				7397F6DD0E5C9F60003AE8A6 /* FScript.framework in Frameworks */,
 				7397F76C0E5C9FF1003AE8A6 /* AudioToolbox.framework in Frameworks */,
+				5DD50E001A6BAAE90012B2A1 /* Chomp.framework in Frameworks */,
 				7397F76D0E5C9FF1003AE8A6 /* CoreAudio.framework in Frameworks */,
 				7397F76E0E5C9FF1003AE8A6 /* CoreMIDI.framework in Frameworks */,
+				5DD50D141A6B6F520012B2A1 /* libportsmf.a in Frameworks */,
 				73CA0AAC0E77E1BB006D131C /* CoreServices.framework in Frameworks */,
+				5DD50D131A6B6F520012B2A1 /* FScript.framework in Frameworks */,
 				73CA0AAD0E77E1BB006D131C /* CoreFoundation.framework in Frameworks */,
 				73CA0AB70E77E1D9006D131C /* Carbon.framework in Frameworks */,
 				73C7F3220FF3890400DAB6E1 /* AudioUnit.framework in Frameworks */,
@@ -194,6 +213,9 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5DD50D9A1A6BA4680012B2A1 /* NSNumberPool.h */,
+				5DD50D9B1A6BA4680012B2A1 /* NSNumberPool.m */,
+				5DD50D601A6BA3280012B2A1 /* Model */,
 				7397F6D60E5C9F1A003AE8A6 /* AppControl.h */,
 				7397F6D70E5C9F1A003AE8A6 /* AppControl.m */,
 				7397F76F0E5C9FFD003AE8A6 /* MIDIUtil.h */,
@@ -204,7 +226,6 @@
 				7397F7D00E5CA211003AE8A6 /* senorstaff */,
 				73D107E00FEA4B29000CFF15 /* SongPlayer.h */,
 				73D107E10FEA4B29000CFF15 /* SongPlayer.m */,
-				73CA09B40E77E12C006D131C /* allegro.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -216,11 +237,9 @@
 				73CA0AB60E77E1D9006D131C /* Carbon.framework */,
 				73CA0AAA0E77E1BB006D131C /* CoreServices.framework */,
 				73CA0AAB0E77E1BB006D131C /* CoreFoundation.framework */,
-				73CA09AE0E77E0D1006D131C /* libportsmf.a */,
 				7397F7690E5C9FF1003AE8A6 /* AudioToolbox.framework */,
 				7397F76A0E5C9FF1003AE8A6 /* CoreAudio.framework */,
 				7397F76B0E5C9FF1003AE8A6 /* CoreMIDI.framework */,
-				7397F6DC0E5C9F60003AE8A6 /* FScript.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -252,6 +271,7 @@
 				736457B10E6BEC160022079A /* Tests */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				5DD50D101A6B6F520012B2A1 /* Frameworks */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -291,6 +311,61 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5DD50D101A6B6F520012B2A1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5DD50DFF1A6BAAE90012B2A1 /* Chomp.framework */,
+				5DD50D111A6B6F520012B2A1 /* FScript.framework */,
+				5DD50D121A6B6F520012B2A1 /* libportsmf.a */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		5DD50D601A6BA3280012B2A1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5DD50D611A6BA3280012B2A1 /* Chord.h */,
+				5DD50D621A6BA3280012B2A1 /* Chord.m */,
+				5DD50D631A6BA3280012B2A1 /* ChromaticKeySignature.h */,
+				5DD50D641A6BA3280012B2A1 /* ChromaticKeySignature.m */,
+				5DD50D651A6BA3280012B2A1 /* Clef.h */,
+				5DD50D661A6BA3280012B2A1 /* Clef.m */,
+				5DD50D671A6BA3280012B2A1 /* CompoundTimeSig.h */,
+				5DD50D681A6BA3280012B2A1 /* CompoundTimeSig.m */,
+				5DD50D691A6BA3280012B2A1 /* Drum+Lilypond.h */,
+				5DD50D6A1A6BA3280012B2A1 /* Drum+Lilypond.m */,
+				5DD50D6B1A6BA3280012B2A1 /* Drum+MusicXML.h */,
+				5DD50D6C1A6BA3280012B2A1 /* Drum+MusicXML.m */,
+				5DD50D6D1A6BA3280012B2A1 /* Drum.h */,
+				5DD50D6E1A6BA3280012B2A1 /* Drum.m */,
+				5DD50D6F1A6BA3280012B2A1 /* DrumKit.h */,
+				5DD50D701A6BA3280012B2A1 /* DrumKit.m */,
+				5DD50D711A6BA3280012B2A1 /* KeySignature.h */,
+				5DD50D721A6BA3280012B2A1 /* KeySignature.m */,
+				5DD50D731A6BA3280012B2A1 /* Measure.h */,
+				5DD50D741A6BA3280012B2A1 /* Measure.m */,
+				5DD50D751A6BA3280012B2A1 /* MusicDocument.h */,
+				5DD50D761A6BA3280012B2A1 /* MusicDocument.m */,
+				5DD50D771A6BA3280012B2A1 /* Note.h */,
+				5DD50D781A6BA3280012B2A1 /* Note.m */,
+				5DD50D791A6BA3280012B2A1 /* NoteBase.h */,
+				5DD50D7A1A6BA3280012B2A1 /* NoteBase.m */,
+				5DD50D7B1A6BA3280012B2A1 /* Repeat.h */,
+				5DD50D7C1A6BA3280012B2A1 /* Repeat.m */,
+				5DD50D7D1A6BA3280012B2A1 /* Rest.h */,
+				5DD50D7E1A6BA3280012B2A1 /* Rest.m */,
+				5DD50D7F1A6BA3280012B2A1 /* Song.h */,
+				5DD50D801A6BA3280012B2A1 /* Song.m */,
+				5DD50D811A6BA3280012B2A1 /* Staff.h */,
+				5DD50D821A6BA3280012B2A1 /* Staff.m */,
+				5DD50D831A6BA3280012B2A1 /* TempoData.h */,
+				5DD50D841A6BA3280012B2A1 /* TempoData.m */,
+				5DD50D851A6BA3280012B2A1 /* TimeSignature.h */,
+				5DD50D861A6BA3280012B2A1 /* TimeSignature.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		736457B10E6BEC160022079A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,36 +398,6 @@
 		7397F7D00E5CA211003AE8A6 /* senorstaff */ = {
 			isa = PBXGroup;
 			children = (
-				7397F8010E5CA9E6003AE8A6 /* MusicDocument.h */,
-				7397F8020E5CA9E6003AE8A6 /* MusicDocument.m */,
-				7397F7790E5CA03A003AE8A6 /* Song.h */,
-				7397F77A0E5CA03A003AE8A6 /* Song.m */,
-				7397F77C0E5CA045003AE8A6 /* Staff.h */,
-				7397F77D0E5CA045003AE8A6 /* Staff.m */,
-				7397F77F0E5CA053003AE8A6 /* TimeSignature.h */,
-				7397F7800E5CA053003AE8A6 /* TimeSignature.m */,
-				7397F7820E5CA05F003AE8A6 /* TempoData.h */,
-				7397F7830E5CA05F003AE8A6 /* TempoData.m */,
-				7397F7850E5CA070003AE8A6 /* NoteBase.h */,
-				7397F7860E5CA070003AE8A6 /* NoteBase.m */,
-				7397F7880E5CA083003AE8A6 /* Note.h */,
-				7397F7890E5CA083003AE8A6 /* Note.m */,
-				7397F78B0E5CA095003AE8A6 /* Rest.h */,
-				7397F78C0E5CA095003AE8A6 /* Rest.m */,
-				7397F78E0E5CA0A1003AE8A6 /* Measure.h */,
-				7397F78F0E5CA0A1003AE8A6 /* Measure.m */,
-				7397F79B0E5CA0F9003AE8A6 /* KeySignature.h */,
-				7397F79C0E5CA0F9003AE8A6 /* KeySignature.m */,
-				7397F79F0E5CA113003AE8A6 /* CompoundTimeSig.h */,
-				7397F7A00E5CA113003AE8A6 /* CompoundTimeSig.m */,
-				7397F7A20E5CA123003AE8A6 /* Chord.h */,
-				7397F7A30E5CA123003AE8A6 /* Chord.m */,
-				7397F7A50E5CA134003AE8A6 /* Repeat.h */,
-				7397F7A60E5CA134003AE8A6 /* Repeat.m */,
-				7397F7C80E5CA1F6003AE8A6 /* Clef.h */,
-				7397F7C90E5CA1F6003AE8A6 /* Clef.m */,
-				7397F9870E5CC541003AE8A6 /* ChromaticKeySignature.h */,
-				7397F9880E5CC541003AE8A6 /* ChromaticKeySignature.m */,
 			);
 			name = senorstaff;
 			sourceTree = "<group>";
@@ -415,9 +460,15 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SenorStaff Hack" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* SenorStaff Hack */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -489,27 +540,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DD50D961A6BA3280012B2A1 /* Song.m in Sources */,
+				5DD50D981A6BA3280012B2A1 /* TempoData.m in Sources */,
+				5DD50D871A6BA3280012B2A1 /* Chord.m in Sources */,
+				5DD50D8C1A6BA3280012B2A1 /* Drum+MusicXML.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				5DD50D931A6BA3280012B2A1 /* NoteBase.m in Sources */,
+				5DD50D8B1A6BA3280012B2A1 /* Drum+Lilypond.m in Sources */,
+				5DD50D8E1A6BA3280012B2A1 /* DrumKit.m in Sources */,
 				7397F6D80E5C9F1A003AE8A6 /* AppControl.m in Sources */,
 				7397F7710E5C9FFD003AE8A6 /* MIDIUtil.m in Sources */,
-				7397F8030E5CA9E6003AE8A6 /* MusicDocument.m in Sources */,
-				7397F8110E5CAC33003AE8A6 /* Song.m in Sources */,
-				7397F84C0E5CB25C003AE8A6 /* Staff.m in Sources */,
-				7397F8770E5CB702003AE8A6 /* Clef.m in Sources */,
-				7397F87C0E5CB735003AE8A6 /* KeySignature.m in Sources */,
-				7397F8840E5CB783003AE8A6 /* Measure.m in Sources */,
-				7397F8FB0E5CC0FD003AE8A6 /* TimeSignature.m in Sources */,
-				7397F9890E5CC541003AE8A6 /* ChromaticKeySignature.m in Sources */,
-				73B71F180E5DEB630064F2BA /* TempoData.m in Sources */,
-				73B721B20E5E00570064F2BA /* Note.m in Sources */,
-				73B721B50E5E00930064F2BA /* Chord.m in Sources */,
-				73B721B70E5E00B90064F2BA /* Rest.m in Sources */,
-				730B39000E5F288100434DF5 /* NoteBase.m in Sources */,
+				5DD50D971A6BA3280012B2A1 /* Staff.m in Sources */,
+				5DD50D941A6BA3280012B2A1 /* Repeat.m in Sources */,
 				73D107E20FEA4B29000CFF15 /* SongPlayer.m in Sources */,
 				73EFB4540FEE5936001B7C96 /* SimpleNote.m in Sources */,
+				5DD50D891A6BA3280012B2A1 /* Clef.m in Sources */,
+				5DD50D991A6BA3280012B2A1 /* TimeSignature.m in Sources */,
 				73EFB45B0FEE5958001B7C96 /* SimpleSong.m in Sources */,
+				5DD50D911A6BA3280012B2A1 /* MusicDocument.m in Sources */,
+				5DD50D8D1A6BA3280012B2A1 /* Drum.m in Sources */,
+				5DD50D8F1A6BA3280012B2A1 /* KeySignature.m in Sources */,
+				5DD50D951A6BA3280012B2A1 /* Rest.m in Sources */,
+				5DD50D881A6BA3280012B2A1 /* ChromaticKeySignature.m in Sources */,
+				5DD50D921A6BA3280012B2A1 /* Note.m in Sources */,
 				730DEE070FF1789F001D9E33 /* MidiLoader.m in Sources */,
 				7315FCD20FF2EA4F008D3CE1 /* MidiInterface.m in Sources */,
+				5DD50D9C1A6BA4680012B2A1 /* NSNumberPool.m in Sources */,
+				5DD50D901A6BA3280012B2A1 /* Measure.m in Sources */,
+				5DD50D8A1A6BA3280012B2A1 /* CompoundTimeSig.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,7 +597,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73675AEE0FF42B9700B02E63 /* Project-Coverage.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_FAST_OBJC_DISPATCH = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -547,6 +605,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
+				SDKROOT = macosx;
 			};
 			name = Coverage;
 		};
@@ -555,10 +614,13 @@
 			baseConfigurationReference = 73675AF10FF42B9700B02E63 /* Target-Executable.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../Source Code/CHDataStructures/build/Debug\"",
 					"\"$(SRCROOT)/../../../Source_Code/CHDataStructures/build/Debug\"",
+					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -572,8 +634,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Source Code/portsmf/portsmf/build/Debug\"",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				PRODUCT_NAME = "SenorStaff Hack";
+				SDKROOT = macosx;
 			};
 			name = Coverage;
 		};
@@ -682,10 +747,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../Source Code/CHDataStructures/build/Debug\"",
 					"\"$(SRCROOT)/../../../Source_Code/CHDataStructures/build/Debug\"",
+					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -699,8 +767,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Source Code/portsmf/portsmf/build/Debug\"",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				PRODUCT_NAME = "SenorStaff Hack";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -708,10 +779,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Source_Code/CHDataStructures/build/Debug\"",
+					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)",
 				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -721,8 +795,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../Source Code/portsmf/portsmf/build/Debug\"",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				PRODUCT_NAME = "SenorStaff Hack";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -730,7 +807,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73675AEB0FF42B9700B02E63 /* Project-Debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
 				CONFIGURATION_TEMP_DIR = "$(SYMROOT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -741,6 +818,7 @@
 				OBJROOT = "$(SYMROOT)";
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
+				SDKROOT = macosx;
 				SYMROOT = "$(SYMROOT)";
 			};
 			name = Debug;
@@ -749,11 +827,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 73675AEF0FF42B9700B02E63 /* Project-Release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
