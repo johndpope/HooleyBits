@@ -379,8 +379,12 @@ static char lastStatus = 0x00;
                     num = [self readIntFrom:data offset:(offset) length:1];
                     denomPower = [self readIntFrom:data offset:(offset + 1) length:1];
                     denom = pow(2, denomPower);
-                    [song setTimeSignature:[TimeSignature timeSignatureWithTop:num bottom:denom]
-                                   atIndex:([[staff getMeasures] count] - 1)];
+                    int idx = ([[staff getMeasures] count] - 1);
+                    if (idx > 0) {
+                        [song setTimeSignature:[TimeSignature timeSignatureWithTop:num bottom:denom]
+                                       atIndex:idx];
+                    }
+                    
                     break;
                     
                 case 0x59: //key signature
@@ -460,7 +464,8 @@ static char lastStatus = 0x00;
                                 break;
                             }
                             restsToCreate -= [rest getEffectiveDuration];
-                            [measure addNote:rest atIndex:([[measure getNotes] count] - 0.5) tieToPrev:NO];
+                            NSArray *arr = [measure.notes copy];
+                            [measure addNote:rest atIndex:([arr count] - 0.5) tieToPrev:NO];
                             measure = [staff getLastMeasure];
                         }
                     }
@@ -476,9 +481,9 @@ static char lastStatus = 0x00;
                 keySig = [measure getEffectiveKeySignature];
                 switch (type) {
                     case 0x80: //note off
-                        openNotesEnum = [openNoteArray objectEnumerator];
+                        openNotesEnum = [[openNoteArray copy] objectEnumerator];
                         while (openNote = [openNotesEnum nextObject]) {
-                            if ([openNote getEffectivePitchWithKeySignature:keySig priorAccidentals:[measure getAccidentalsAtPosition:[[measure getNotes] count]]] == param1) {
+                            if ([openNote getEffectivePitchWithKeySignature:keySig priorAccidentals:[measure getAccidentalsAtPosition:[measure.notes count]]] == param1) {
                                 [openNoteArray removeObject:openNote];
                             }
                         }
@@ -489,7 +494,7 @@ static char lastStatus = 0x00;
                         octave = (param1 / 12);
                         acc = [keySig accidentalForPitch:(param1 % 12) atPosition:pitch];
                         if (acc == NO_ACC) {
-                            accidentals = [measure getAccidentalsAtPosition:[[measure getNotes] count]];
+                            accidentals = [measure getAccidentalsAtPosition:[measure.notes count]];
                             prevAcc = [accidentals objectForKey:[NSNumber numberWithInt:(octave * 7 + pitch)]];
                             if (prevAcc != nil && [prevAcc intValue] != NO_ACC) {
                                 acc = NATURAL;
@@ -535,7 +540,7 @@ static char lastStatus = 0x00;
                         else {
                             [openNoteArray addObject:newNote];
                         }
-                        [measure addNote:newNote atIndex:([[measure getNotes] count] - 0.5) tieToPrev:NO];
+                        [measure addNote:newNote atIndex:([measure.notes count] - 0.5) tieToPrev:NO];
                         break;
                 }
                 [lastEventTimes setObject:[NSNumber numberWithFloat:(lastEvent + deltaBeats)] forKey:ch];
@@ -547,7 +552,8 @@ static char lastStatus = 0x00;
     while (staff = [staffsEnum nextObject]) {
         NSArray *measures = [staff getMeasures];
         NSLog(@"measure:%@", measures);
-        if ([measures count] > 1 || ([measures count] == 1 && [[[measures objectAtIndex:0] getNotes] count] > 0)) {
+        Measure *measure = [measures objectAtIndex:0];
+        if ([measures count] > 1 || ([measures count] == 1 && [measure.notes count] > 0)) {
             NSEnumerator *measuresEnum = [measures objectEnumerator];
             id measure;
             while (measure = [measuresEnum nextObject]) {

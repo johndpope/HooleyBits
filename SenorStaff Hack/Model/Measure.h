@@ -20,7 +20,7 @@
     Staff *staff;
     Clef *clef;
     KeySignature *keySig;
-    NSMutableArray *notes;
+    
     NSViewAnimation *anim;
     
     IBOutlet NSView *keySigPanel;
@@ -37,19 +37,19 @@
     IBOutlet NSPopUpButton *timeSigSecondBottom;
     IBOutlet NSButton *timeSigInnerClose;
     IBOutlet NSButton *timeSigExpand;
-    
-    NSArray *cachedNoteGroups;
 }
-
+@property (nonatomic, strong) NSArray *cachedNoteGroups;
+@property (nonatomic, strong) NSMutableArray *notes;
+@property (nonatomic, strong) NSMutableArray *notesToPush;
 - (id)initWithStaff:(Staff *)_staff;
 
 - (Staff *)getStaff;
 
 - (NSUndoManager *)undoManager;
 
-- (NSMutableArray *)getNotes;
+
 - (NoteBase *)getFirstNote;
-- (void)setNotes:(NSMutableArray *)_notes;
+//- (void)setNotes:(NSMutableArray *)_notes;
 - (void)addNote:(NoteBase *)_note atIndex:(float)index tieToPrev:(BOOL)tieToPrev;
 - (NoteBase *)addNotes:(NSArray *)_notes atIndex:(float)index;
 - (NoteBase *)addNotesInternal:(NSArray *)_notes atIndex:(float)index consolidate:(BOOL)consolidate;

@@ -12,12 +12,10 @@
 @class Staff;
 
 @interface NoteBase : NSObject {
-	int duration;
-	BOOL dotted;
-
-	Staff *staff;
+    int duration;
+    BOOL dotted;
 }
-
+@property (nonatomic, strong) Staff *staff;
 - (int)getDuration;
 - (BOOL)getDotted;
 
@@ -25,8 +23,6 @@
 - (void)setDotted:(BOOL)_dotted;
 - (void)setDottedSilently:(BOOL)_dotted;
 
-- (Staff *)getStaff;
-- (void)setStaff:(Staff *)_staff;
 
 - (NSUndoManager *)undoManager;
 - (void)sendChangeNotification;
@@ -42,8 +38,8 @@
 - (BOOL)isDrawBars;
 
 - (float)addToMIDITrack:(MusicTrack *)musicTrack atPosition:(float)pos
-	   withKeySignature:(KeySignature *)sig accidentals:(NSMutableDictionary *)accidentals
-			  transpose:(int)transposition onChannel:(int)channel;
+       withKeySignature:(KeySignature *)sig accidentals:(NSMutableDictionary *)accidentals
+              transpose:(int)transposition onChannel:(int)channel;
 - (void)addToLilypondString:(NSMutableString *)string accidentals:(NSMutableDictionary *)accidentals;
 - (void)addNoteToLilypondString:(NSMutableString *)string accidentals:(NSMutableDictionary *)accidentals;
 - (void)addDurationToLilypondString:(NSMutableString *)string;

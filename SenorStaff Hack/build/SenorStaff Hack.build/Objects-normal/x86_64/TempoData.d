@@ -1,2 +1,2 @@
 dependencies: \
-  /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/Model/TempoData.m
+  /Users/johnpope/Documents/gitWorkspace/HooleyBits/SenorStaff\ Hack/Model/TempoData.m

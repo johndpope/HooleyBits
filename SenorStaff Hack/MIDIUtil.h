@@ -15,8 +15,8 @@
 
 //+ (NSData *)writeSequenceToData:(MusicSequence)seq;
 
-+ (void)parseMidiData:(NSData *)data intoSong:(SimpleSong *)song;
++ (void)parseMidiData:(NSData *)data intoSong:(Song *)song;
 
-+ (void)readSong:(SimpleSong *)song fromMIDI:(NSData *)data;
++ (void)readSong:(Song *)song fromMIDI:(NSData *)data;
 + (NSData *)writeSequenceToData:(MusicSequence)seq;
 @end

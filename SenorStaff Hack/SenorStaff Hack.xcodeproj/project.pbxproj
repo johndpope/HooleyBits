@@ -32,7 +32,6 @@
 		5DD50D9C1A6BA4680012B2A1 /* NSNumberPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD50D9B1A6BA4680012B2A1 /* NSNumberPool.m */; };
 		5DD50E001A6BAAE90012B2A1 /* Chomp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD50DFF1A6BAAE90012B2A1 /* Chomp.framework */; };
 		5DD50E021A6BAF3E0012B2A1 /* apprhythmsvol1y2r1.mid in Resources */ = {isa = PBXBuildFile; fileRef = 5DD50E011A6BAF3E0012B2A1 /* apprhythmsvol1y2r1.mid */; };
-		730DEE070FF1789F001D9E33 /* MidiLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 730DEE060FF1789F001D9E33 /* MidiLoader.m */; };
 		7315FCD20FF2EA4F008D3CE1 /* MidiInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 7315FCD10FF2EA4F008D3CE1 /* MidiInterface.m */; };
 		736457B70E6BEC560022079A /* bars - 1 2 3 4.mid in Resources */ = {isa = PBXBuildFile; fileRef = 73FB73810E69FE8600AE64C2 /* bars - 1 2 3 4.mid */; };
 		7397F6D80E5C9F1A003AE8A6 /* AppControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F6D70E5C9F1A003AE8A6 /* AppControl.m */; };
@@ -41,9 +40,6 @@
 		7397F76E0E5C9FF1003AE8A6 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7397F76B0E5C9FF1003AE8A6 /* CoreMIDI.framework */; };
 		7397F7710E5C9FFD003AE8A6 /* MIDIUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7700E5C9FFD003AE8A6 /* MIDIUtil.m */; };
 		7397F7F40E5CA35A003AE8A6 /* Sor_Study.mid in Resources */ = {isa = PBXBuildFile; fileRef = 7397F7F30E5CA35A003AE8A6 /* Sor_Study.mid */; };
-		73B4CCCF0FF512C900949D15 /* SimpleNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EFB4530FEE5936001B7C96 /* SimpleNote.m */; };
-		73B4CD7B0FF51BD500949D15 /* SimpleSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EFB45A0FEE5958001B7C96 /* SimpleSong.m */; };
-		73B4CD7C0FF51BD900949D15 /* MidiLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 730DEE060FF1789F001D9E33 /* MidiLoader.m */; };
 		73B4CD7E0FF51BE600949D15 /* MIDIUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397F7700E5C9FFD003AE8A6 /* MIDIUtil.m */; };
 		73B4CD9F0FF51EE600949D15 /* SimpleSongTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BB3CA50FED3F3B000C1262 /* SimpleSongTests.m */; };
 		73B4CDA40FF51EFA00949D15 /* MidiLoaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73675AB50FF42A6600B02E63 /* MidiLoaderTests.m */; };
@@ -61,8 +57,6 @@
 		73CA0AAD0E77E1BB006D131C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CA0AAB0E77E1BB006D131C /* CoreFoundation.framework */; };
 		73CA0AB70E77E1D9006D131C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CA0AB60E77E1D9006D131C /* Carbon.framework */; };
 		73D107E20FEA4B29000CFF15 /* SongPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 73D107E10FEA4B29000CFF15 /* SongPlayer.m */; };
-		73EFB4540FEE5936001B7C96 /* SimpleNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EFB4530FEE5936001B7C96 /* SimpleNote.m */; };
-		73EFB45B0FEE5958001B7C96 /* SimpleSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 73EFB45A0FEE5958001B7C96 /* SimpleSong.m */; };
 		73FB73820E69FE8600AE64C2 /* bars - 1 2 3 4.mid in Resources */ = {isa = PBXBuildFile; fileRef = 73FB73810E69FE8600AE64C2 /* bars - 1 2 3 4.mid */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -135,8 +129,6 @@
 		5DD50D9B1A6BA4680012B2A1 /* NSNumberPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberPool.m; sourceTree = "<group>"; };
 		5DD50DFF1A6BAAE90012B2A1 /* Chomp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Chomp.framework; sourceTree = SOURCE_ROOT; };
 		5DD50E011A6BAF3E0012B2A1 /* apprhythmsvol1y2r1.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = apprhythmsvol1y2r1.mid; sourceTree = "<group>"; };
-		730DEE050FF1789F001D9E33 /* MidiLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiLoader.h; path = Src/MidiLoader.h; sourceTree = "<group>"; };
-		730DEE060FF1789F001D9E33 /* MidiLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MidiLoader.m; path = Src/MidiLoader.m; sourceTree = "<group>"; };
 		7315FCD00FF2EA4F008D3CE1 /* MidiInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiInterface.h; path = Src/MidiInterface.h; sourceTree = "<group>"; };
 		7315FCD10FF2EA4F008D3CE1 /* MidiInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MidiInterface.m; path = Src/MidiInterface.m; sourceTree = "<group>"; };
 		73675AB00FF429DD00B02E63 /* MidiInterfaceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MidiInterfaceTests.m; path = Tests/MidiInterfaceTests.m; sourceTree = "<group>"; };
@@ -171,10 +163,6 @@
 		73CA0AB60E77E1D9006D131C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		73D107E00FEA4B29000CFF15 /* SongPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SongPlayer.h; path = Src/SongPlayer.h; sourceTree = "<group>"; };
 		73D107E10FEA4B29000CFF15 /* SongPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SongPlayer.m; path = Src/SongPlayer.m; sourceTree = "<group>"; };
-		73EFB4520FEE5936001B7C96 /* SimpleNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleNote.h; path = Src/SimpleNote.h; sourceTree = "<group>"; };
-		73EFB4530FEE5936001B7C96 /* SimpleNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleNote.m; path = Src/SimpleNote.m; sourceTree = "<group>"; };
-		73EFB4590FEE5958001B7C96 /* SimpleSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleSong.h; path = Src/SimpleSong.h; sourceTree = "<group>"; };
-		73EFB45A0FEE5958001B7C96 /* SimpleSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleSong.m; path = Src/SimpleSong.m; sourceTree = "<group>"; };
 		73FB73810E69FE8600AE64C2 /* bars - 1 2 3 4.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = "bars - 1 2 3 4.mid"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* SenorStaff Hack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SenorStaff Hack.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -225,7 +213,6 @@
 				7397F7700E5C9FFD003AE8A6 /* MIDIUtil.m */,
 				7315FCD00FF2EA4F008D3CE1 /* MidiInterface.h */,
 				7315FCD10FF2EA4F008D3CE1 /* MidiInterface.m */,
-				73EFB44F0FEE590C001B7C96 /* Simplified */,
 				7397F7D00E5CA211003AE8A6 /* senorstaff */,
 				73D107E00FEA4B29000CFF15 /* SongPlayer.h */,
 				73D107E10FEA4B29000CFF15 /* SongPlayer.m */,
@@ -407,19 +394,6 @@
 			name = senorstaff;
 			sourceTree = "<group>";
 		};
-		73EFB44F0FEE590C001B7C96 /* Simplified */ = {
-			isa = PBXGroup;
-			children = (
-				73EFB4520FEE5936001B7C96 /* SimpleNote.h */,
-				73EFB4530FEE5936001B7C96 /* SimpleNote.m */,
-				73EFB4590FEE5958001B7C96 /* SimpleSong.h */,
-				73EFB45A0FEE5958001B7C96 /* SimpleSong.m */,
-				730DEE050FF1789F001D9E33 /* MidiLoader.h */,
-				730DEE060FF1789F001D9E33 /* MidiLoader.m */,
-			);
-			name = Simplified;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -530,9 +504,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				73BB3CAB0FED3F6B000C1262 /* SimpleNoteTests.m in Sources */,
-				73B4CCCF0FF512C900949D15 /* SimpleNote.m in Sources */,
-				73B4CD7B0FF51BD500949D15 /* SimpleSong.m in Sources */,
-				73B4CD7C0FF51BD900949D15 /* MidiLoader.m in Sources */,
 				73B4CD7E0FF51BE600949D15 /* MIDIUtil.m in Sources */,
 				73B4CD9F0FF51EE600949D15 /* SimpleSongTests.m in Sources */,
 				73B4CDA40FF51EFA00949D15 /* MidiLoaderTests.m in Sources */,
@@ -559,17 +530,14 @@
 				5DD50D971A6BA3280012B2A1 /* Staff.m in Sources */,
 				5DD50D941A6BA3280012B2A1 /* Repeat.m in Sources */,
 				73D107E20FEA4B29000CFF15 /* SongPlayer.m in Sources */,
-				73EFB4540FEE5936001B7C96 /* SimpleNote.m in Sources */,
 				5DD50D891A6BA3280012B2A1 /* Clef.m in Sources */,
 				5DD50D991A6BA3280012B2A1 /* TimeSignature.m in Sources */,
-				73EFB45B0FEE5958001B7C96 /* SimpleSong.m in Sources */,
 				5DD50D911A6BA3280012B2A1 /* MusicDocument.m in Sources */,
 				5DD50D8D1A6BA3280012B2A1 /* Drum.m in Sources */,
 				5DD50D8F1A6BA3280012B2A1 /* KeySignature.m in Sources */,
 				5DD50D951A6BA3280012B2A1 /* Rest.m in Sources */,
 				5DD50D881A6BA3280012B2A1 /* ChromaticKeySignature.m in Sources */,
 				5DD50D921A6BA3280012B2A1 /* Note.m in Sources */,
-				730DEE070FF1789F001D9E33 /* MidiLoader.m in Sources */,
 				7315FCD20FF2EA4F008D3CE1 /* MidiInterface.m in Sources */,
 				5DD50D9C1A6BA4680012B2A1 /* NSNumberPool.m in Sources */,
 				5DD50D901A6BA3280012B2A1 /* Measure.m in Sources */,

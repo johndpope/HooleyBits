@@ -13,10 +13,11 @@
 @implementation Rest
 
 - (id)initWithDuration:(int)_duration dotted:(BOOL)_dotted onStaff:(Staff *)_staff {
+    ENTER_METHOD;
     if (self = [super init]) {
         duration = _duration;
         dotted = _dotted;
-        staff = _staff;
+        self.staff = _staff;
     }
     return self;
 }
@@ -30,7 +31,7 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    return [[Rest allocWithZone:zone] initWithDuration:duration dotted:dotted onStaff:staff];
+    return [[Rest allocWithZone:zone] initWithDuration:duration dotted:dotted onStaff:self.staff];
 }
 
 - (float)addToMIDITrack:(MusicTrack *)musicTrack atPosition:(float)pos withKeySignature:(KeySignature *)keySig
@@ -55,14 +56,14 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-    [coder encodeObject:staff forKey:@"staff"];
+    [coder encodeObject:self.staff forKey:@"staff"];
     [coder encodeInt:duration forKey:@"duration"];
     [coder encodeBool:dotted forKey:@"dotted"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
     if (self = [super init]) {
-        staff = [coder decodeObjectForKey:@"staff"];
+        self.staff = [coder decodeObjectForKey:@"staff"];
         duration = [coder decodeIntForKey:@"duration"];
         dotted = [coder decodeBoolForKey:@"dotted"];
     }

@@ -1,2 +1,2 @@
 dependencies: \
-  /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/main.m
+  /Users/johnpope/Documents/gitWorkspace/HooleyBits/SenorStaff\ Hack/main.m

@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/Model/Song.m \
-  /Users/johnpope/Downloads/github.com/HooleyBits-master/SenorStaff\ Hack/MIDIUtil.h
+  /Users/johnpope/Documents/gitWorkspace/HooleyBits/SenorStaff\ Hack/Model/Song.m \
+  /Users/johnpope/Documents/gitWorkspace/HooleyBits/SenorStaff\ Hack/MIDIUtil.h

@@ -24,14 +24,18 @@
 
 - (id)initWithSong:(Song *)_song {
     if ((self = [super init])) {
-        Measure *firstMeasure = [[Measure alloc] initWithStaff:self];
-        [firstMeasure setClef:[Clef trebleClef]];
-        [firstMeasure setKeySignature:[KeySignature getSignatureWithFlats:0 minor:NO]];
-        measures = [NSMutableArray arrayWithObject:firstMeasure];
         song = _song;
         canMute = YES;
     }
+    
     return self;
+}
+
+- (void)configureFirstMeasure {
+    Measure *firstMeasure = [[Measure alloc] initWithStaff:self];
+    [firstMeasure setClef:[Clef trebleClef]];
+    [firstMeasure setKeySignature:[KeySignature getSignatureWithFlats:0 minor:NO]];
+    self.measures = [[NSMutableArray alloc]initWithObjects:firstMeasure, nil];
 }
 
 - (NSUndoManager *)undoManager {
@@ -69,16 +73,6 @@
     transposition = _transposition;
 }
 
-- (NSMutableArray *)getMeasures {
-    return measures;
-}
-
-- (void)setMeasures:(NSMutableArray *)_measures {
-    if (![measures isEqual:_measures]) {
-        measures = _measures;
-    }
-}
-
 - (StaffVerticalRulerComponent *)rulerView {
     return rulerView;
 }
@@ -112,7 +106,7 @@
 }
 
 - (Clef *)getClefForMeasure:(Measure *)measure {
-    int index = [measures indexOfObject:measure];
+    int index = [self.measures indexOfObject:measure];
     if ([self isDrums]) {
         return [self drumKit];
     }
@@ -120,7 +114,7 @@
         while ([measure getClef] == nil) {
             if (index == 0) return [Clef trebleClef];
             index--;
-            measure = [measures objectAtIndex:index];
+            measure = [self.measures objectAtIndex:index];
         }
         return [measure getClef];
     }
@@ -130,44 +124,44 @@
     if ([self isDrums]) {
         return [ChromaticKeySignature instance];
     }
-    int index = [measures indexOfObject:measure];
+    int index = [self.measures indexOfObject:measure];
     while ([measure getKeySignature] == nil) {
         if (index == 0) return [KeySignature getSignatureWithSharps:0 minor:NO];
         index--;
-        measure = [measures objectAtIndex:index];
+        measure = [self.measures objectAtIndex:index];
     }
     return [measure getKeySignature];
 }
 
 - (TimeSignature *)getTimeSignatureForMeasure:(Measure *)measure {
-    return [song getTimeSignatureAt:[measures indexOfObject:measure]];
+    return [song getTimeSignatureAt:[self.measures indexOfObject:measure]];
 }
 
 - (TimeSignature *)getEffectiveTimeSignatureForMeasure:(Measure *)measure {
-    int index = [measures indexOfObject:measure];
+    int index = [self.measures indexOfObject:measure];
     return [song getEffectiveTimeSignatureAt:index];
 }
 
 - (BOOL)isCompoundTimeSignatureAt:(Measure *)measure {
-    int index = [measures indexOfObject:measure];
+    int index = [self.measures indexOfObject:measure];
     return [song isCompoundTimeSignatureAt:index];
 }
 
 - (Measure *)getLastMeasure {
-    return [measures lastObject];
+    return [self.measures lastObject];
 }
 
 - (Measure *)getMeasureAtIndex:(unsigned)index {
-    if ([measures count] <= index) {
+    if ([self.measures count] <= index) {
         return nil;
     }
-    return [measures objectAtIndex:index];
+    return [self.measures objectAtIndex:index];
 }
 
 - (Measure *)getMeasureBefore:(Measure *)measure {
-    int index = [measures indexOfObject:measure];
+    int index = [self.measures indexOfObject:measure];
     if (index > 0) {
-        return [measures objectAtIndex:(index - 1)];
+        return [self.measures objectAtIndex:(index - 1)];
     }
     else {
         return nil;
@@ -189,27 +183,28 @@
 }
 
 - (void)addMeasure:(Measure *)measure {
-    if (![measures containsObject:measure]) {
+    // NSLog(@"addMeasure count:%d",  self.measures.count);
+    if (![self.measures containsObject:measure]) {
         [[[self undoManager] prepareWithInvocationTarget:self] removeMeasure:measure];
-        [measures addObject:measure];
+        [self.measures addObject:measure];
         [song refreshTimeSigs];
         [song refreshTempoData];
     }
 }
 
 - (void)removeMeasure:(Measure *)measure {
-    if ([measures containsObject:measure]) {
+    if ([self.measures containsObject:measure]) {
         [[[self undoManager] prepareWithInvocationTarget:self] addMeasure:measure];
-        [measures removeObject:measure];
+        [self.measures removeObject:measure];
         [song refreshTimeSigs];
         [song refreshTempoData];
     }
 }
 
 - (Measure *)getMeasureAfter:(Measure *)measure createNew:(BOOL)createNew {
-    int index = [measures indexOfObject:measure];
-    if (index + 1 < [measures count]) {
-        return [measures objectAtIndex:(index + 1)];
+    int index = [self.measures indexOfObject:measure];
+    if (index + 1 < [self.measures count]) {
+        return [self.measures objectAtIndex:(index + 1)];
     }
     else {
         if (createNew) {
@@ -222,12 +217,12 @@
 }
 
 - (Measure *)getMeasureContainingNote:(NoteBase *)note {
-    NSEnumerator *measuresEnum = [measures objectEnumerator];
-    id measure;
+    NSEnumerator *measuresEnum = [self.measures objectEnumerator];
+    Measure *measure;
     while (measure = [measuresEnum nextObject]) {
         int i;
-        for (i = 0; i < [[measure getNotes] count]; i++) {
-            NoteBase *currNote = [[measure getNotes] objectAtIndex:i];
+        for (i = 0; i < [measure.notes count]; i++) {
+            NoteBase *currNote = [measure.notes objectAtIndex:i];
             if (currNote == note || ([currNote isKindOfClass:[Chord class]] && [[(Chord *)currNote getNotes] containsObject:note])) {
                 return measure;
             }
@@ -237,10 +232,10 @@
 }
 
 - (Chord *)getChordContainingNote:(NoteBase *)noteToFind {
-    NSEnumerator *measuresEnum = [measures objectEnumerator];
-    id measure;
+    NSEnumerator *measuresEnum = [self.measures objectEnumerator];
+    Measure *measure;
     while (measure = [measuresEnum nextObject]) {
-        NSEnumerator *notes = [[measure getNotes] objectEnumerator];
+        NSEnumerator *notes = [measure.notes objectEnumerator];
         id note;
         while (note = [notes nextObject]) {
             if ([note isKindOfClass:[Chord class]] &&
@@ -253,16 +248,16 @@
 }
 
 - (void)removeLastNote {
-    Measure *measure = [measures lastObject];
-    while (measure != [measures objectAtIndex:0] && [[measure getNotes] count] == 0) {
-        measure = [measures objectAtIndex:([measures indexOfObject:measure] - 1)];
+    Measure *measure = [self.measures lastObject];
+    while (measure != [self.measures objectAtIndex:0] && [measure.notes count] == 0) {
+        measure = [self.measures objectAtIndex:([self.measures indexOfObject:measure] - 1)];
     }
-    [[measure getNotes] removeLastObject];
+    [measure.notes removeLastObject];
 }
 
 - (void)cleanEmptyMeasures {
-    while ([measures count] > 1 && [[measures lastObject] isEmpty]) {
-        Measure *measure = [measures lastObject];
+    while ([self.measures count] > 1 && [[self.measures lastObject] isEmpty]) {
+        Measure *measure = [self.measures lastObject];
         [measure keySigClose:nil];
         [self removeMeasure:measure];
     }
@@ -275,7 +270,7 @@
         ([[measure getFirstNote] isKindOfClass:[Chord class]] && [[(Chord *)[measure getFirstNote] getNotes] containsObject:source])) {
         Measure *prevMeasure = [[measure getStaff] getMeasureBefore:measure];
         if (prevMeasure != nil) {
-            NoteBase *note = [[prevMeasure getNotes] lastObject];
+            NoteBase *note = [prevMeasure.notes lastObject];
             if ([note respondsToSelector:@selector(pitchMatches:)] && [(Note *)note pitchMatches:source]) {
                 return note;
             }
@@ -298,40 +293,40 @@
 }
 
 - (NoteBase *)noteBefore:(NoteBase *)note {
-    NSEnumerator *measureEnum = [measures objectEnumerator];
-    id measure;
-    while ((measure = [measureEnum nextObject]) && ![[measure getNotes] containsObject:note]);
+    NSEnumerator *measureEnum = [self.measures objectEnumerator];
+    Measure *measure;
+    while ((measure = [measureEnum nextObject]) && ![measure.notes containsObject:note]);
     if (measure != nil) {
         if ([measure getFirstNote] == note) {
-            if (measure == [measures objectAtIndex:0]) {
+            if (measure == [self.measures objectAtIndex:0]) {
                 return nil;
             }
-            return [[[measures objectAtIndex:([measures indexOfObject:measure] - 1)] getNotes] lastObject];
+            return [[[self.measures objectAtIndex:([self.measures indexOfObject:measure] - 1)] getNotes] lastObject];
         }
         else {
-            return [[measure getNotes] objectAtIndex:([[measure getNotes] indexOfObject:note] - 1)];
+            return [measure.notes objectAtIndex:([measure.notes indexOfObject:note] - 1)];
         }
     }
     return nil;
 }
 
 - (NoteBase *)noteAfter:(NoteBase *)note {
-    NSEnumerator *measureEnum = [measures objectEnumerator];
-    id measure;
-    while ((measure = [measureEnum nextObject]) && ![[measure getNotes] containsObject:note]);
+    NSEnumerator *measureEnum = [self.measures objectEnumerator];
+    Measure *measure;
+    while ((measure = [measureEnum nextObject]) && ![measure.notes containsObject:note]);
     if (measure != nil) {
-        if ([[measure getNotes] lastObject] == note) {
-            if (measure == [measures lastObject]) {
+        if ([measure.notes lastObject] == note) {
+            if (measure == [self.measures lastObject]) {
                 return nil;
             }
-            Measure *nextMeasure = [measures objectAtIndex:([measures indexOfObject:measure] + 1)];
-            if ([[nextMeasure getNotes] count] == 0) {
+            Measure *nextMeasure = [self.measures objectAtIndex:([self.measures indexOfObject:measure] + 1)];
+            if ([nextMeasure.notes count] == 0) {
                 return nil;
             }
-            return [[nextMeasure getNotes] objectAtIndex:0];
+            return [nextMeasure.notes objectAtIndex:0];
         }
         else {
-            return [[measure getNotes] objectAtIndex:([[measure getNotes] indexOfObject:note] + 1)];
+            return [measure.notes objectAtIndex:([measure.notes indexOfObject:note] + 1)];
         }
     }
     return nil;
@@ -350,13 +345,13 @@
         lastNote = note1;
     }
     if (firstMeasure == lastMeasure &&
-        [[firstMeasure getNotes] indexOfObject:note1] > [[firstMeasure getNotes] indexOfObject:note2]) {
+        [firstMeasure.notes indexOfObject:note1] > [firstMeasure.notes indexOfObject:note2]) {
         firstNote = note2;
         lastNote = note1;
     }
     int i;
-    for (i = [[firstMeasure getNotes] indexOfObject:firstNote]; i < [[firstMeasure getNotes] count]; i++) {
-        NoteBase *note = [[firstMeasure getNotes] objectAtIndex:i];
+    for (i = [firstMeasure.notes indexOfObject:firstNote]; i < [firstMeasure.notes count]; i++) {
+        NoteBase *note = [firstMeasure.notes objectAtIndex:i];
         [between addObject:note];
         if (note == lastNote) {
             return between;
@@ -364,10 +359,10 @@
     }
     Measure *currMeasure;
     for (currMeasure = [self getMeasureAfter:firstMeasure createNew:NO]; currMeasure != lastMeasure; currMeasure = [self getMeasureAfter:currMeasure createNew:NO]) {
-        [between addObjectsFromArray:[currMeasure getNotes]];
+        [between addObjectsFromArray:currMeasure.notes];
     }
-    for (i = 0; i <= [[lastMeasure getNotes] indexOfObject:lastNote]; i++) {
-        NoteBase *note = [[lastMeasure getNotes] objectAtIndex:i];
+    for (i = 0; i <= [lastMeasure.notes indexOfObject:lastNote]; i++) {
+        NoteBase *note = [lastMeasure.notes objectAtIndex:i];
         [between addObject:note];
     }
     return between;
@@ -386,13 +381,13 @@
         return [self notesBetweenSingleNote:firstArrayNote andNote:note2];
     }
     if (secondNoteMeasure == firstArrayMeasure) {
-        if ([[secondNoteMeasure getNotes] indexOfObject:note2] >= [[secondNoteMeasure getNotes] indexOfObject:firstArrayNote]) {
+        if ([secondNoteMeasure.notes indexOfObject:note2] >= [secondNoteMeasure.notes indexOfObject:firstArrayNote]) {
             return [self notesBetweenSingleNote:firstArrayNote andNote:note2];
         }
         return [self notesBetweenSingleNote:note2 andNote:lastArrayNote];
     }
     if (secondNoteMeasure == lastArrayMeasure) {
-        if ([[secondNoteMeasure getNotes] indexOfObject:note2] <= [[secondNoteMeasure getNotes] indexOfObject:lastArrayNote]) {
+        if ([secondNoteMeasure.notes indexOfObject:note2] <= [secondNoteMeasure.notes indexOfObject:lastArrayNote]) {
             return [self notesBetweenSingleNote:firstArrayNote andNote:note2];
         }
         return [self notesBetweenSingleNote:firstArrayNote andNote:note2];
@@ -416,7 +411,7 @@
     else if ([[self getMeasures] indexOfObject:firstArray1Measure] > [[self getMeasures] indexOfObject:firstArray2Measure]) {
         firstNote = firstArray2Note;
     }
-    else if ([[firstArray1Measure getNotes] indexOfObject:firstArray1Note] < [[firstArray1Measure getNotes] indexOfObject:firstArray2Note]) {
+    else if ([firstArray1Measure.notes indexOfObject:firstArray1Note] < [firstArray1Measure.notes indexOfObject:firstArray2Note]) {
         firstNote = firstArray1Note;
     }
     else {
@@ -428,7 +423,7 @@
     else if ([[self getMeasures] indexOfObject:lastArray1Measure] > [[self getMeasures] indexOfObject:lastArray2Measure]) {
         lastNote = lastArray1Note;
     }
-    else if ([[lastArray1Measure getNotes] indexOfObject:lastArray1Note] < [[lastArray1Measure getNotes] indexOfObject:lastArray2Note]) {
+    else if ([lastArray1Measure.notes indexOfObject:lastArray1Note] < [lastArray1Measure.notes indexOfObject:lastArray2Note]) {
         lastNote = lastArray2Note;
     }
     else {
@@ -454,7 +449,7 @@
 
 - (void)toggleClefAtMeasure:(Measure *)measure {
     Clef *oldClef = [measure getClef];
-    if (oldClef != nil && measure != [measures objectAtIndex:0]) {
+    if (oldClef != nil && measure != [self.measures objectAtIndex:0]) {
         [measure setClef:nil];
     }
     else {
@@ -463,11 +458,11 @@
     }
     Clef *newClef = [self getClefForMeasure:measure];
     int numLines = [newClef getTranspositionFrom:oldClef];
-    int index = [measures indexOfObject:measure] + 1;
+    int index = [self.measures indexOfObject:measure] + 1;
     [measure transposeBy:numLines];
-    if (index < [measures count]) {
-        while (index < [measures count]) {
-            measure = [measures objectAtIndex:index++];
+    if (index < [self.measures count]) {
+        while (index < [self.measures count]) {
+            measure = [self.measures objectAtIndex:index++];
             if ([measure getClef] != nil) break;
             [measure transposeBy:numLines];
         }
@@ -475,19 +470,19 @@
 }
 
 - (void)timeSigChangedAtMeasure:(Measure *)measure top:(int)top bottom:(int)bottom {
-    [song timeSigChangedAtIndex:[measures indexOfObject:measure]
+    [song timeSigChangedAtIndex:[self.measures indexOfObject:measure]
                             top:(int)top bottom:(int)bottom];
 }
 
 - (void)timeSigChangedAtMeasure:(Measure *)measure top:(int)top bottom:(int)bottom secondTop:(int)secondTop secondBottom:(int)secondBottom {
-    [song timeSigChangedAtIndex:[measures indexOfObject:measure]
+    [song timeSigChangedAtIndex:[self.measures indexOfObject:measure]
                             top:(int)top bottom:(int)bottom
                       secondTop:(int)secondTop secondBottom:(int)secondBottom];
 }
 
 - (void)timeSigDeletedAtMeasure:(Measure *)measure {
-    if (measure != [measures objectAtIndex:0]) {
-        [song timeSigDeletedAtIndex:[measures indexOfObject:measure]];
+    if (measure != [self.measures objectAtIndex:0]) {
+        [song timeSigDeletedAtIndex:[self.measures indexOfObject:measure]];
     }
 }
 
@@ -501,7 +496,7 @@
 }
 
 - (void)cleanPanels {
-    NSEnumerator *measureEnum = [measures objectEnumerator];
+    NSEnumerator *measureEnum = [self.measures objectEnumerator];
     id measure;
     while (measure = [measureEnum nextObject]) {
         [measure cleanPanels];
@@ -551,7 +546,7 @@
 - (void)setChannel:(int)_channel {
     [[[self undoManager] prepareWithInvocationTarget:self] setChannel:(channel + 1)];
     channel = _channel - 1;
-    [self setIsDrums:[self isDrums]]; //trigger KVO
+    [self setIsDrums:[self isDrums]];               //trigger KVO
     [self sendChangeNotification];
 }
 
@@ -561,11 +556,11 @@
         return 0;
     }
     
-    NSEnumerator *measureEnum = [measures objectEnumerator];
+    NSEnumerator *measureEnum = [self.measures objectEnumerator];
     id measure;
     float pos = 0.0;
     BOOL isRepeating;
-    NSMutableArray *repeatMeasures = [NSMutableArray array];
+    NSMutableArray *repeatMeasures = [[NSMutableArray alloc]init];
     while (measure = [measureEnum nextObject]) {
         if ([measure isStartRepeat]) {
             isRepeating = YES;
@@ -610,7 +605,7 @@
     if ([[self name] length] > 0) {
         [string appendFormat:@"\\set Staff.instrumentName = \"%@\"\n", [self name]];
     }
-    [[measures do] addToLilypondString:string];
+    [[self.measures do] addToLilypondString:string];
     [string appendString:@"}\n"];
     if ([self isDrums]) {
         [string appendString:@"}\n"];
@@ -618,11 +613,11 @@
 }
 
 - (void)addToMusicXMLString:(NSMutableString *)string {
-    [[measures do] addToMusicXMLString:string];
+    [[self.measures do] addToMusicXMLString:string];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-    [coder encodeObject:measures forKey:@"measures"];
+    [coder encodeObject:self.measures forKey:@"measures"];
     [coder encodeInt:channel forKey:@"channel"];
     [coder encodeInt:transposition forKey:@"transposition"];
     [coder encodeObject:name forKey:@"name"];
@@ -642,12 +637,6 @@
     return self;
 }
 
-- (void)dealloc {
-    measures = nil;
-    drumKit = nil;
-    song = nil;
-}
-
 //- (Class)getViewClass {
 //    if ([self isDrums]) {
 //        return [DrumStaffDraw class];
@@ -659,10 +648,10 @@
 //    return [StaffController class];
 //}
 
-- (NSString *)description {
-    NSMutableString *str = [NSMutableString string];
-    [self addToMusicXMLString:str];
-    return str;
-}
+//- (NSString *)description {
+//    NSMutableString *str = [NSMutableString string];
+//    [self addToMusicXMLString:str];
+//    return str;
+//}
 
 @end

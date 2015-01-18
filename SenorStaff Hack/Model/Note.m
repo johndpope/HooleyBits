@@ -16,13 +16,15 @@
 
 - (id)initWithPitch:(int)_pitch octave:(int)_octave
            duration:(int)_duration dotted:(BOOL)_dotted accidental:(int)_accidental onStaff:(Staff *)_staff {
+    ENTER_METHOD;
     if (self = [super init]) {
         lastPitch = pitch = _pitch;
         lastOctave = octave = _octave;
         duration = _duration;
+        NSLog(@"duration:%d", duration);
         dotted = _dotted;
         accidental = _accidental;
-        staff = _staff;
+        self.staff = _staff;
         tieTo = nil;
         tieFrom = nil;
     }
@@ -93,7 +95,7 @@
 - (id)copyWithZone:(NSZone *)zone {
     return [[Note allocWithZone:zone] initWithPitch:pitch
                                              octave:octave duration:duration dotted:dotted
-                                         accidental:accidental onStaff:staff];
+                                         accidental:accidental onStaff:self.staff];
 }
 
 - (BOOL)isEqualTo:(id)obj {
@@ -147,15 +149,15 @@
 }
 
 - (BOOL)pitchMatches:(Note *)note {
-    return [note getEffectivePitchWithKeySignature:[[[note getStaff] getMeasureContainingNote:note] getEffectiveKeySignature] priorAccidentals:nil] == [self getEffectivePitchWithKeySignature:[[[self getStaff] getMeasureContainingNote:self] getEffectiveKeySignature] priorAccidentals:nil];
+    return [note getEffectivePitchWithKeySignature:[[self.staff getMeasureContainingNote:note] getEffectiveKeySignature] priorAccidentals:nil] == [self getEffectivePitchWithKeySignature:[[self.staff getMeasureContainingNote:self] getEffectiveKeySignature] priorAccidentals:nil];
 }
 
 - (BOOL)isHigherThan:(Note *)note {
-    return [note getEffectivePitchWithKeySignature:[[[note getStaff] getMeasureContainingNote:note] getEffectiveKeySignature] priorAccidentals:nil] < [self getEffectivePitchWithKeySignature:[[[self getStaff] getMeasureContainingNote:self] getEffectiveKeySignature] priorAccidentals:nil];
+    return [note getEffectivePitchWithKeySignature:[[self.staff getMeasureContainingNote:note] getEffectiveKeySignature] priorAccidentals:nil] < [self getEffectivePitchWithKeySignature:[[self.staff getMeasureContainingNote:self] getEffectiveKeySignature] priorAccidentals:nil];
 }
 
 - (BOOL)isLowerThan:(Note *)note {
-    return [note getEffectivePitchWithKeySignature:[[[note getStaff] getMeasureContainingNote:note] getEffectiveKeySignature] priorAccidentals:nil] > [self getEffectivePitchWithKeySignature:[[[self getStaff] getMeasureContainingNote:self] getEffectiveKeySignature] priorAccidentals:nil];
+    return [note getEffectivePitchWithKeySignature:[[self.staff getMeasureContainingNote:note] getEffectiveKeySignature] priorAccidentals:nil] > [self getEffectivePitchWithKeySignature:[[self.staff getMeasureContainingNote:self] getEffectiveKeySignature] priorAccidentals:nil];
 }
 
 - (BOOL)isDrawBars {
@@ -270,7 +272,7 @@
 
 - (int)getAbsoluteAccidentalWithPriorAccidentals:(NSMutableDictionary *)accidentals {
     if (accidental == NO_ACC) {
-        KeySignature *keySig = [[staff getMeasureContainingNote:self] getEffectiveKeySignature];
+        KeySignature *keySig = [[self.staff getMeasureContainingNote:self] getEffectiveKeySignature];
         return [self getEffectiveAccidentalWithKeySignature:keySig priorAccidentals:accidentals];
     }
     else {
@@ -307,12 +309,12 @@
 }
 
 - (void)addDrumPitchToLilypondString:(NSMutableString *)string {
-    Clef *clef = [[staff getMeasureContainingNote:self] getEffectiveClef];
+    Clef *clef = [[self.staff getMeasureContainingNote:self] getEffectiveClef];
     [string appendString:[(DrumKit *)clef lilypondStringForPitch:[self getPitch] octave:[self getOctave]]];
 }
 
 - (void)addPitchToLilypondString:(NSMutableString *)string accidentals:(NSMutableDictionary *)accidentals {
-    if ([staff isDrums]) {
+    if ([self.staff isDrums]) {
         [self addDrumPitchToLilypondString:string];
     }
     else {
@@ -331,7 +333,7 @@
 }
 
 - (void)addDrumPitchToMusicXMLString:(NSMutableString *)string {
-    Clef *clef = [[staff getMeasureContainingNote:self] getEffectiveClef];
+    Clef *clef = [[self.staff getMeasureContainingNote:self] getEffectiveClef];
     [string appendString:[(DrumKit *)clef musicXMLStringForPitch:[self getPitch] octave:[self getOctave]]];
 }
 
@@ -340,7 +342,7 @@
     if (chord) {
         [string appendString:@"<chord/>\n"];
     }
-    if ([staff isDrums]) {
+    if ([self.staff isDrums]) {
         [self addDrumPitchToMusicXMLString:string];
     }
     else {

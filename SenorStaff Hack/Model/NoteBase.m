@@ -27,7 +27,7 @@
 - (void)setDotted:(BOOL)_dotted {
     [[[self undoManager] prepareWithInvocationTarget:self] setDotted:dotted];
     dotted = _dotted;
-    Measure *measure = [staff getMeasureContainingNote:self];
+    Measure *measure = [self.staff getMeasureContainingNote:self];
     [measure refreshNotes:self];
     [measure grabNotesFromNextMeasure];
 }
@@ -36,16 +36,8 @@
     dotted = _dotted;
 }
 
-- (Staff *)getStaff {
-    return staff;
-}
-
-- (void)setStaff:(Staff *)_staff {
-    staff = _staff;
-}
-
 - (NSUndoManager *)undoManager {
-    return [[[[self getStaff] getSong] document] undoManager];
+    return [[[self.staff getSong] document] undoManager];
 }
 
 - (void)sendChangeNotification {
@@ -83,7 +75,7 @@
     // find first triplet note in sequence leading up to this note
     NoteBase *curr = self;
     NoteBase *prev;
-    for (prev = [staff noteBefore:curr]; prev != nil && [prev isTriplet]; prev = [staff noteBefore:curr]) {
+    for (prev = [self.staff noteBefore:curr]; prev != nil && [prev isTriplet]; prev = [self.staff noteBefore:curr]) {
         curr = prev;
     }
     BOOL foundSelf = NO;
@@ -109,7 +101,7 @@
             [triplet removeAllObjects];
             tripletDuration = 0;
         }
-        curr = [staff noteAfter:curr];
+        curr = [self.staff noteAfter:curr];
     }
     return nil;
 }
@@ -307,12 +299,12 @@
  - (Class)getControllerClass {
  return [NoteController class];
  }*/
-
-- (NSString *)description {
-    NSMutableString *str = [NSMutableString string];
-    NSLog(@"TODO - [self addToMusicXMLString:str];");
-    // [self addToMusicXMLString:str];
-    return str;
-}
+//
+//- (NSString *)description {
+//    NSMutableString *str = [[NSMutableString alloc]init];
+//    //  NSLog(@"TODO - [self addToMusicXMLString:str];");
+//    // [self addToMusicXMLString:str];
+//    return str;
+//}
 
 @end

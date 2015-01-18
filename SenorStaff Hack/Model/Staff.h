@@ -20,7 +20,6 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 @interface Staff : NSObject <NSCoding> {
-    NSMutableArray *measures;
     Song *song;
     NSString *name;
     int transposition;
@@ -31,9 +30,10 @@
     
     MusicTrack musicTrack;
 }
-
+@property (nonatomic, strong, getter = getMeasures) NSMutableArray *measures;
 - (id)initWithSong:(Song *)_song;
 
+- (void)configureFirstMeasure;
 - (void)setSong:(Song *)_song;
 - (Song *)getSong;
 
@@ -43,7 +43,6 @@
 - (int)transposition;
 - (void)setTransposition:(int)_transposition;
 
-- (NSMutableArray *)getMeasures;
 - (void)setMeasures:(NSMutableArray *)_measures;
 
 - (StaffVerticalRulerComponent *)rulerView;

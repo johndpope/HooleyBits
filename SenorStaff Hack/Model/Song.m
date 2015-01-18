@@ -24,6 +24,7 @@
 
 #import "MIDIUtil.h"
 #import "MusicDocument.h"
+#import <Chomp/Chomp.h>
 
 int enableMIDI = 1;
 
@@ -33,7 +34,9 @@ int enableMIDI = 1;
     if ((self = [super init])) {
         doc = _doc;
         tempoData = [NSMutableArray arrayWithObject:[[TempoData alloc] initWithTempo:120 withSong:self]];
-        staffs = [NSMutableArray arrayWithObject:[[Staff alloc] initWithSong:self]];
+        Staff *first = [[Staff alloc] initWithSong:self];
+        [first configureFirstMeasure];
+        staffs = [[NSMutableArray alloc]initWithObjects:first, nil];
         [(Staff *)[staffs objectAtIndex:0] setName:@"Staff 1"];
         timeSigs = [NSMutableArray arrayWithObject:[TimeSignature timeSignatureWithTop:4 bottom:4]];
         repeats = [NSMutableArray array];
@@ -229,7 +232,13 @@ int enableMIDI = 1;
 }
 
 - (TimeSignature *)getTimeSignatureAt:(int)measureIndex {
-    return [timeSigs objectAtIndex:measureIndex];
+    if (measureIndex > 0) {
+        if (timeSigs.count < measureIndex) {
+            return [timeSigs objectAtIndex:measureIndex];
+        }
+    }
+    
+    return 0;
 }
 
 - (TimeSignature *)getEffectiveTimeSignatureAt:(int)measureIndex {
@@ -626,10 +635,10 @@ int enableMIDI = 1;
     repeats = nil;
 }
 
-- (NSString *)description {
-    NSMutableString *str = [NSMutableString string];
-    [[self doSelf] appendMusicXMLToString:str forStaff:[staffs each]];
-    return str;
-}
+//- (NSString *)description {
+//    NSMutableString *str = [NSMutableString string];
+//    [[self doSelf] appendMusicXMLToString:str forStaff:[staffs each]];
+//    return str;
+//}
 
 @end

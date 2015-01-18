@@ -16,7 +16,7 @@
 
 - (id)initWithStaff:(Staff *)_staff {
     if (self = [super init]) {
-        staff = _staff;
+        self.staff = _staff;
         notes = [NSMutableArray arrayWithCapacity:3];
     }
     return self;
@@ -24,7 +24,7 @@
 
 - (id)initWithStaff:(Staff *)_staff withNotes:(NSMutableArray *)_notes {
     if (self = [super init]) {
-        staff = _staff;
+        self.staff = _staff;
         notes = [NSMutableArray arrayWithArray:_notes];
     }
     return self;
@@ -32,14 +32,14 @@
 
 - (id)initWithStaff:(Staff *)_staff withNotes:(NSArray *)_notes copyItems:(BOOL)_copyItems {
     if (self = [super init]) {
-        staff = _staff;
+        self.staff = _staff;
         notes = [[NSMutableArray alloc] initWithArray:_notes copyItems:_copyItems];
     }
     return self;
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    return [[Chord allocWithZone:zone] initWithStaff:staff withNotes:notes copyItems:YES];
+    return [[Chord allocWithZone:zone] initWithStaff:self.staff withNotes:notes copyItems:YES];
 }
 
 - (void)setStaff:(Staff *)_staff {
@@ -124,7 +124,7 @@
                     [newChordNotes addObject:[noteArr objectAtIndex:i]];
                 }
             }
-            [remainingChords addObject:[[Chord alloc] initWithStaff:staff withNotes:newChordNotes]];
+            [remainingChords addObject:[[Chord alloc] initWithStaff:self.staff withNotes:newChordNotes]];
         }
         return remainingChords;
     }
@@ -261,7 +261,7 @@
 }
 
 - (void)addNoteToLilypondString:(NSMutableString *)string accidentals:(NSMutableDictionary *)accidentals {
-    if (![staff isDrums]) {
+    if (![self.staff isDrums]) {
         [string appendString:@"<"];
         NSEnumerator *notesEnum = [notes objectEnumerator];
         id note;

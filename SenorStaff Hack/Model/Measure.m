@@ -24,16 +24,20 @@
 @implementation Measure
 
 - (id)initWithStaff:(Staff *)_staff {
+    ENTER_METHOD;
+    if (_staff == nil) {
+        return nil;
+    }
     if ((self = [super init])) {
-        notes = [[NSMutableArray alloc] init];
+        self.notes = [[NSMutableArray alloc] init];
         staff = _staff;
-        cachedNoteGroups = nil;
+        self.cachedNoteGroups = @[];
     }
     return self;
 }
 
 - (void)clearCaches {
-    cachedNoteGroups = nil;
+    self.cachedNoteGroups = nil;
 }
 
 - (Staff *)getStaff {
@@ -48,23 +52,21 @@
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"modelChanged" object:self]];
 }
 
-- (NSMutableArray *)getNotes {
-    return notes;
-}
-
 - (NoteBase *)getFirstNote {
-    return [notes objectAtIndex:0];
+    return [self.notes objectAtIndex:0];
 }
 
 - (void)prepUndo {
-    [[[self undoManager] prepareWithInvocationTarget:self] setNotes:[NSMutableArray arrayWithArray:notes]];
+    NSArray *arr = [self.notes copy];
+    [[[self undoManager] prepareWithInvocationTarget:self] setTheNotes:arr];
 }
 
-- (void)setNotes:(NSMutableArray *)_notes {
+- (void)setTheNotes:(NSMutableArray *)_notes_ {
     [self clearCaches];
     [self prepUndo];
-    if (![notes isEqual:_notes]) {
-        notes = _notes;
+    if (![self.notes isEqual:_notes_]) {
+        [self.notes removeAllObjects];
+        [self.notes addObjectsFromArray:_notes_];
         [staff cleanEmptyMeasures];
     }
     [self sendChangeNotification];
@@ -72,15 +74,14 @@
 
 - (float)getTotalDuration {
     float totalDuration = 0;
-    NSEnumerator *notesEnum = [notes objectEnumerator];
-    id note;
-    while (note = [notesEnum nextObject]) {
-        totalDuration += [note getEffectiveDuration];
+    for (Note *n in self.notes) {
+        totalDuration += [n getEffectiveDuration];
     }
     return totalDuration;
 }
 
 - (void)addNote:(NoteBase *)_note atIndex:(float)index tieToPrev:(BOOL)tieToPrev {
+    NSLog(@"note:%@", _note);
     [self clearCaches];
     [self prepUndo];
     if (((int)(index * 2)) % 2 == 0) {
@@ -93,7 +94,7 @@
         }
     }
     else {
-        Note *firstAddedNote = [self addNotesInternal:[NSArray arrayWithObject:_note] atIndex:index consolidate:NO];
+        Note *firstAddedNote = [self addNotesInternal:@[_note] atIndex:index consolidate:NO];
         Measure *measure = [staff getMeasureContainingNote:firstAddedNote];
         if (tieToPrev) {
             Note *tie = [staff findPreviousNoteMatching:firstAddedNote inMeasure:measure];
@@ -104,26 +105,29 @@
     }
 }
 
-- (NoteBase *)addNotes:(NSArray *)_notes atIndex:(float)index {
+- (NoteBase *)addNotes:(NSArray *)_notes_ atIndex:(float)index {
+    NSLog(@"note:%@", _notes_);
     [self clearCaches];
     [self prepUndo];
-    return [self addNotesInternal:_notes atIndex:index consolidate:YES];
+    return [self addNotesInternal:_notes_ atIndex:index consolidate:YES];
 }
 
-- (NoteBase *)addNotesInternal:(NSArray *)_notes atIndex:(float)index consolidate:(BOOL)consolidate {
+- (NoteBase *)addNotesInternal:(NSArray *)_notes_ atIndex:(float)index consolidate:(BOOL)consolidate {
     [self clearCaches];
-    NSEnumerator *notesEnum = [_notes reverseObjectEnumerator];
+    NSLog(@"note:%@", _notes_);
+    
+    NSEnumerator *notesEnum = [_notes_ reverseObjectEnumerator];
     NoteBase *note;
     index = ceil(index);
     
     // break tie if necessary
     Note *prevNote = nil, *nextNote = nil;
     if (index - 1 >= 0) {
-        prevNote = [notes objectAtIndex:index - 1];
+        prevNote = [self.notes objectAtIndex:index - 1];
         nextNote = [prevNote getTieTo];
     }
-    else if (index < [notes count]) {
-        nextNote = [notes objectAtIndex:index];
+    else if (index < [self.notes count]) {
+        nextNote = [self.notes objectAtIndex:index];
         prevNote = [nextNote getTieFrom];
     }
     if (prevNote != nil && nextNote != nil && ![_notes containsObject:prevNote] && ![_notes containsObject:nextNote]) {
@@ -145,27 +149,29 @@
     
     NoteBase *lastNoteAdded = nil;
     while (note = [notesEnum nextObject]) {
-        if (consolidate && [note getTieFrom] != nil && [notes containsObject:[note getTieFrom]]) {
+        if (consolidate && [note getTieFrom] != nil && [self.notes containsObject:[note getTieFrom]]) {
             [self consolidateNote:note];
         }
         else {
-            [notes insertObject:note atIndex:index];
-            lastNoteAdded = note;
+            if ([note isKindOfClass:[NSObject class]]) {
+                [self.notes insertObject:note atIndex:index];
+                lastNoteAdded = note;
+            }
         }
     }
-    if (consolidate && [lastNoteAdded getTieTo] != nil && [notes containsObject:[lastNoteAdded getTieTo]]) {
-        [notes removeObject:[lastNoteAdded getTieTo]];
+    if (consolidate && [lastNoteAdded getTieTo] != nil && [self.notes containsObject:[lastNoteAdded getTieTo]]) {
+        [self.notes removeObject:[lastNoteAdded getTieTo]];
         [self consolidateNote:[lastNoteAdded getTieTo]];
     }
-    if (index >= [notes count]) return nil;
-    NoteBase *rtn = [notes objectAtIndex:index];
+    if (index >= [self.notes count]) return nil;
+    NoteBase *rtn = [self.notes objectAtIndex:index];
     return [self refreshNotes:rtn];
 }
 
 - (void)consolidateNote:(NoteBase *)note {
     [self clearCaches];
     NoteBase *oldNote = [note getTieFrom];
-    int index = [notes indexOfObject:oldNote];
+    int index = [self.notes indexOfObject:oldNote];
     NoteBase *noteToAdd = [note copy];
     float targetDuration = [oldNote getEffectiveDuration] + [note getEffectiveDuration];
     [noteToAdd tryToFill:targetDuration];
@@ -190,41 +196,41 @@
         [[remainingNotes lastObject] tieTo:[note getTieTo]];
         [[note getTieTo] tieFrom:[remainingNotes lastObject]];
         
-        [notes insertObjects:remainingNotes atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(index + 1, [remainingNotes count])]];
+        [self.notes insertObjects:remainingNotes atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(index + 1, [remainingNotes count])]];
     }
     else {
         [[note getTieTo] tieFrom:noteToAdd];
         [noteToAdd tieTo:[note getTieTo]];
     }
     
-    [notes replaceObjectAtIndex:index withObject:noteToAdd];
+    [self.notes replaceObjectAtIndex:index withObject:noteToAdd];
 }
 
 - (NoteBase *)refreshNotes:(NoteBase *)rtn {
     [self clearCaches];
     float totalDuration = [self getTotalDuration];
     float maxDuration = [[self getEffectiveTimeSignature] getMeasureDuration];
-    NSMutableArray *notesToPush = [NSMutableArray array];
+    self.notesToPush = [[NSMutableArray alloc]init];
     //	while we have too many notes
     while (totalDuration > maxDuration) {
         float toRemove = totalDuration - maxDuration;
-        NoteBase *lastNote = [notes lastObject];
+        NoteBase *lastNote = [[self.notes lastObject] copy];
         //			if the last note is longer than we need to remove
         if ([lastNote getEffectiveDuration] > toRemove) {
             //				remove the last note
-            [notes removeLastObject];
+            [self.notes removeLastObject];
             //				get a note which is as close as possible to (but still less than) the amount we need to remove
-            NoteBase *noteToPush = [lastNote copy];
+            NoteBase *noteToPush = lastNote;
             [noteToPush tryToFill:toRemove];
             //				get an array of notes resulting from removing that note from the original note
             NSArray *remainingNotes = [lastNote subtractDuration:[noteToPush getEffectiveDuration]];
             //				tie the last of those notes to the note we're adding
-            [notes removeObject:lastNote];
+            [self.notes removeObject:lastNote];
             if ([remainingNotes count] > 0) {
                 [[remainingNotes lastObject] tieTo:noteToPush];
                 [noteToPush tieFrom:[remainingNotes lastObject]];
                 //				add the last note to the next measure
-                [notesToPush insertObject:noteToPush atIndex:0];
+                [self.notesToPush insertObject:noteToPush atIndex:0];
                 //				tie the last note to whatever the old note was tied to
                 [noteToPush tieTo:[lastNote getTieTo]];
                 [[lastNote getTieTo] tieFrom:noteToPush];
@@ -232,7 +238,7 @@
                 [[remainingNotes objectAtIndex:0] tieFrom:[lastNote getTieFrom]];
                 [[lastNote getTieFrom] tieTo:[remainingNotes objectAtIndex:0]];
                 //				add the array of notes to this measure
-                [notes addObjectsFromArray:remainingNotes];
+                [self.notes addObjectsFromArray:remainingNotes];
                 //				if we just removed the first note added, update the pointer
                 if (lastNote == rtn) {
                     rtn = [remainingNotes objectAtIndex:0];
@@ -241,17 +247,17 @@
         }
         else {
             //				remove the last note
-            [notes removeLastObject];
+            [self.notes removeLastObject];
             //				add it to the next measure
-            [notesToPush insertObject:lastNote atIndex:0];
+            [self.notesToPush insertObject:lastNote atIndex:0];
         }
         totalDuration = [self getTotalDuration];
     }
     
-    if ([notesToPush count] > 0) {
+    if ([self.notesToPush count] > 0) {
         Measure *nextMeasure = [staff getMeasureAfter:self createNew:YES];
         [nextMeasure prepUndo];
-        [nextMeasure addNotesInternal:notesToPush atIndex:0 consolidate:YES];
+        [nextMeasure addNotesInternal:[self.notesToPush copy] atIndex:0 consolidate:YES];
     }
     
     return rtn;
@@ -289,11 +295,11 @@
                 [[nextNote getTieTo] tieFrom:[remainingNotes lastObject]];
             }
         }
-        if ([noteToAdd getTieFrom] != nil && [notes containsObject:[noteToAdd getTieFrom]]) {
+        if ([noteToAdd getTieFrom] != nil && [self.notes containsObject:[noteToAdd getTieFrom]]) {
             [self consolidateNote:noteToAdd];
         }
         else {
-            [notes addObject:noteToAdd];
+            [self.notes addObject:noteToAdd];
         }
         totalDuration = [self getTotalDuration];
     }
@@ -301,7 +307,7 @@
 
 - (void)removeNoteAtIndex:(float)x temporary:(BOOL)temp {
     [self clearCaches];
-    NoteBase *note = [notes objectAtIndex:floor(x)];
+    NoteBase *note = [self.notes objectAtIndex:floor(x)];
     [self removeNote:note temporary:temp];
 }
 
@@ -311,7 +317,7 @@
     if (!temp) {
         [note prepareForDelete];
     }
-    [notes removeObject:note];
+    [self.notes removeObject:note];
     if (!temp) {
         [self grabNotesFromNextMeasure];
         [staff cleanEmptyMeasures];
@@ -321,7 +327,7 @@
 
 - (void)addNote:(NoteBase *)newNote toChordAtIndex:(float)index {
     [self clearCaches];
-    NoteBase *note = [notes objectAtIndex:index];
+    NoteBase *note = [self.notes objectAtIndex:index];
     if ([note isKindOfClass:[Chord class]]) {
         [(Chord *)note addNote:newNote];
     }
@@ -330,13 +336,13 @@
         [newNote setDotted:[note getDotted]];
         NSMutableArray *chordNotes = [NSMutableArray arrayWithObjects:note, newNote, nil];
         Chord *chord = [[Chord alloc] initWithStaff:staff withNotes:chordNotes];
-        [notes replaceObjectAtIndex:index withObject:chord];
+        [self.notes replaceObjectAtIndex:index withObject:chord];
     }
 }
 
 - (void)removeNote:(NoteBase *)note fromChordAtIndex:(float)index {
     [self clearCaches];
-    NoteBase *chord1 = [notes objectAtIndex:index];
+    NoteBase *chord1 = [self.notes objectAtIndex:index];
     if ([chord1 isKindOfClass:[Chord class]]) {
         Chord *chord = (Chord *)chord1;
         if ([[chord getNotes] containsObject:note]) {
@@ -348,7 +354,7 @@
                 NSEnumerator *chordNotes = [[chord getNotes] objectEnumerator];
                 while (otherNote = [chordNotes nextObject]) {
                     if (otherNote != note) {
-                        [notes replaceObjectAtIndex:index withObject:otherNote];
+                        [self.notes replaceObjectAtIndex:index withObject:otherNote];
                         break;
                     }
                 }
@@ -361,12 +367,12 @@
 }
 
 - (BOOL)isEmpty {
-    return [notes count] == 0;
+    return [self.notes count] == 0;
 }
 
 - (BOOL)isFull {
     float totalDuration = 0.0;
-    NSEnumerator *notesEnum = [notes objectEnumerator];
+    NSEnumerator *notesEnum = [self.notes objectEnumerator];
     id note;
     while (note = [notesEnum nextObject]) {
         totalDuration += [note getEffectiveDuration];
@@ -386,12 +392,12 @@
 }
 
 - (NSArray *)getNoteGroups {
-    if (cachedNoteGroups != nil) {
-        return cachedNoteGroups;
+    if (self.cachedNoteGroups != nil) {
+        return self.cachedNoteGroups;
     }
     NSMutableArray *groups = [NSMutableArray array];
     NSMutableArray *group = [NSMutableArray array];
-    NSEnumerator *notesEnum = [notes objectEnumerator];
+    NSEnumerator *notesEnum = [self.notes objectEnumerator];
     id note;
     float durationSoFar = 0;
     while (note = [notesEnum nextObject]) {
@@ -426,7 +432,7 @@
     if ([group count] > 1) {
         [groups addObject:group];
     }
-    cachedNoteGroups = groups;
+    self.cachedNoteGroups = [[NSArray alloc]initWithArray:groups];
     return groups;
 }
 
@@ -576,11 +582,11 @@
 }
 
 - (NoteBase *)getNoteBefore:(NoteBase *)source {
-    int index = [notes indexOfObject:source];
+    int index = [self.notes indexOfObject:source];
     if (index != NSNotFound && index > 0) {
-        return [notes objectAtIndex:index - 1];
+        return [self.notes objectAtIndex:index - 1];
     }
-    NSEnumerator *notesEnum = [notes objectEnumerator];
+    NSEnumerator *notesEnum = [self.notes objectEnumerator];
     id note;
     while (note = [notesEnum nextObject]) {
         if ([note isKindOfClass:[Chord class]] && [[note getNotes] containsObject:source]) {
@@ -592,7 +598,7 @@
 
 - (float)getNoteStartDuration:(NoteBase *)note {
     float start = 0;
-    NSEnumerator *notesEnum = [notes objectEnumerator];
+    NSEnumerator *notesEnum = [self.notes objectEnumerator];
     id currNote;
     while ((currNote = [notesEnum nextObject]) && currNote != note) {
         start += [currNote getEffectiveDuration];
@@ -602,7 +608,7 @@
 
 - (NSPoint)getNotePosition:(NoteBase *)note {
     float start = 0;
-    NSEnumerator *notesEnum = [notes objectEnumerator];
+    NSEnumerator *notesEnum = [self.notes objectEnumerator];
     id currNote;
     while ((currNote = [notesEnum nextObject]) && currNote != note) {
         start += [currNote getEffectiveDuration];
@@ -613,7 +619,7 @@
 - (int)getNumberOfNotesStartingAfter:(float)startDuration before:(float)endDuration {
     float duration = 0;
     int count = 0;
-    NSEnumerator *notesEnum = [notes objectEnumerator];
+    NSEnumerator *notesEnum = [self.notes objectEnumerator];
     id currNote;
     while ((currNote = [notesEnum nextObject]) && duration < endDuration) {
         if (duration > startDuration) {
@@ -625,7 +631,7 @@
 }
 
 - (NoteBase *)getClosestNoteBefore:(float)targetDuration {
-    NSEnumerator *notesEnum = [notes objectEnumerator];
+    NSEnumerator *notesEnum = [self.notes objectEnumerator];
     id currNote;
     float duration = 0;
     while (currNote = [notesEnum nextObject]) {
@@ -638,7 +644,7 @@
 }
 
 - (NoteBase *)getClosestNoteAfter:(float)targetDuration {
-    NSEnumerator *notesEnum = [notes objectEnumerator];
+    NSEnumerator *notesEnum = [self.notes objectEnumerator];
     id currNote;
     float duration = 0;
     while (currNote = [notesEnum nextObject]) {
@@ -650,7 +656,8 @@
     if ([staff getLastMeasure] == self) {
         return nil;
     }
-    NSArray *nextMeasureNotes = [[staff getMeasureAfter:self createNew:YES] getNotes];
+    Staff *staff = [staff getMeasureAfter:self createNew:YES];
+    NSArray *nextMeasureNotes = self.notes;
     if ([nextMeasureNotes count] == 0) {
         return nil;
     }
@@ -659,12 +666,12 @@
 
 - (void)transposeBy:(int)numLines {
     [self clearCaches];
-    [[notes do] transposeBy:numLines];
+    [[self.notes do] transposeBy:numLines];
 }
 
 - (void)transposeBy:(int)numHalfSteps oldSignature:(KeySignature *)oldSig newSignature:(KeySignature *)newSig {
     [self clearCaches];
-    [[notes do] transposeBy:numHalfSteps oldSignature:oldSig newSignature:newSig];
+    [[self.notes do] transposeBy:numHalfSteps oldSignature:oldSig newSignature:newSig];
 }
 
 - (IBAction)keySigChanged:(id)sender {
@@ -806,7 +813,7 @@
     int i;
     KeySignature *keySig = [self getEffectiveKeySignature];
     for (i = 0; i < pos; i++) {
-        NoteBase *note = [notes objectAtIndex:i];
+        NoteBase *note = [self.notes objectAtIndex:i];
         if ([note respondsToSelector:@selector(getEffectivePitchWithKeySignature:priorAccidentals:)]) {
             [(Chord *)note getEffectivePitchWithKeySignature:keySig priorAccidentals:accidentals];
         }
@@ -816,7 +823,7 @@
 
 - (float)addToMIDITrack:(MusicTrack *)musicTrack atPosition:(float)pos transpose:(int)transposition onChannel:(int)channel notesToPlay:(id)selection {
     float initPos = pos;
-    NSEnumerator *noteEnum = [notes objectEnumerator];
+    NSEnumerator *noteEnum = [self.notes objectEnumerator];
     NSMutableDictionary *accidentals = [NSMutableDictionary dictionary];
     id note;
     while (note = [noteEnum nextObject]) {
@@ -850,7 +857,7 @@
         [keySig addToLilypondString:string];
     }
     NSMutableDictionary *accidentals = [NSMutableDictionary dictionary];
-    [[notes do] addToLilypondString:string accidentals:accidentals];
+    [[self.notes do] addToLilypondString:string accidentals:accidentals];
     if ([self isEndRepeat]) {
         [string appendString:@"\n}\n"];
     }
@@ -890,7 +897,7 @@
         [string appendString:@"<barline location=\"left\">\n<bar-style>heavy-light</bar-style>\n<repeat direction=\"forward\"/>\n</barline>"];
     }
     NSMutableDictionary *accidentals = [NSMutableDictionary dictionary];
-    for (Note *n in notes) {
+    for (Note *n in self.notes) {
         [n addToMusicXMLString:string accidentals:accidentals];
     }
     
@@ -916,7 +923,7 @@
             [coder encodeBool:YES forKey:@"keySigC"];
         }
     }
-    [coder encodeObject:notes forKey:@"notes"];
+    [coder encodeObject:self.notes forKey:@"notes"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
@@ -941,18 +948,14 @@
         else if ([coder decodeBoolForKey:@"keySigC"]) {
             [self setKeySignature:[KeySignature getSignatureWithFlats:0 minor:NO]];
         }
-        [self setNotes:[coder decodeObjectForKey:@"notes"]];
-        [[notes do] setStaff:staff];
+        [self setTheNotes:[coder decodeObjectForKey:@"notes"]];
+        [[self.notes do] setStaff:staff];
     }
     return self;
 }
 
 - (void)dealloc {
-    clef = nil;
-    keySig = nil;
-    notes = nil;
-    anim = nil;
-    cachedNoteGroups = nil;
+    self.notes = nil;
 }
 
 //- (Class)getViewClass {
@@ -969,10 +972,10 @@
 //    return [MeasureController class];
 //}
 
-- (NSString *)description {
-    NSMutableString *str = [NSMutableString string];
-    [self addToMusicXMLString:str];
-    return str;
-}
+//- (NSString *)description {
+//    NSMutableString *str = [NSMutableString string];
+//    [self addToMusicXMLString:str];
+//    return str;
+//}
 
 @end
