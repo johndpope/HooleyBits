@@ -94,7 +94,7 @@
         }
     }
     else {
-        Note *firstAddedNote = [self addNotesInternal:@[_note] atIndex:index consolidate:NO];xxc
+        Note *firstAddedNote = [self addNotesInternal:@[_note] atIndex:index consolidate:NO];
         Measure *measure = [staff getMeasureContainingNote:firstAddedNote];
         if (tieToPrev) {
             Note *tie = [staff findPreviousNoteMatching:firstAddedNote inMeasure:measure];
@@ -210,6 +210,7 @@
     [self clearCaches];
     float totalDuration = [self getTotalDuration];
     float maxDuration = [[self getEffectiveTimeSignature] getMeasureDuration];
+    
     self.notesToPush = [[NSMutableArray alloc]init];
     //	while we have too many notes
     while (totalDuration > maxDuration) {
@@ -541,7 +542,12 @@
 }
 
 - (TimeSignature *)getEffectiveTimeSignature {
-    return [staff getEffectiveTimeSignatureForMeasure:self];
+    TimeSignature *t = [staff getEffectiveTimeSignatureForMeasure:self];
+    NSLog(@"t:%@", t);
+    if (t == nil) {
+        return [TimeSignature timeSignatureWithTop:4 bottom:4];
+    }
+    return t;
 }
 
 - (void)timeSignatureChangedFrom:(float)oldTotal to:(float)newTotal {

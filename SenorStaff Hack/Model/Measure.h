@@ -100,6 +100,7 @@
 
 - (BOOL)isIsolated:(NoteBase *)note;
 - (NSArray *)getNoteGroups;
+- (BOOL)isFull;
 
 - (float)getNoteStartDuration:(NoteBase *)note;
 - (NSPoint)getNotePosition:(NoteBase *)note;
@@ -132,5 +133,6 @@
 - (NoteBase *)refreshNotes:(NoteBase *)rtn;
 - (void)grabNotesFromNextMeasure;
 - (NSString *)debugDescription;
+
 
 @end
