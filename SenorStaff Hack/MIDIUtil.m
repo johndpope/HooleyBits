@@ -1,11 +1,3 @@
-//
-//  MIDIUtil.m
-//  Señor Staff
-//
-//  Created by Konstantine Prevas on 3/25/07.
-//  Copyright 2007 Konstantine Prevas. All rights reserved.
-//
-
 #import "MIDIUtil.h"
 #import "Song.h"
 #import "Staff.h"
@@ -90,7 +82,7 @@ const int RESOLUTION =  480;
 
 static char lastStatus = 0x00;
 
-+ (NSData *)dataForEvent:(void *)event ofType:(MusicEventType)type atTimeDelta:(MusicTimeStamp)timeDelta {
++ (NSData *)dataForEvent:(void *)event ofType:(MusicEventType)type atTimeDelta:(MusicTimeStamp)timeDelta timeStamp:(MusicTimeStamp)timeStamp sequence:(MusicSequence)seq {
     char bytes[100];
     int timestampLength = [self writeVariableLength:(long)(timeDelta * ((float)RESOLUTION)) to:bytes];
     int size = timestampLength;
@@ -144,6 +136,7 @@ static char lastStatus = 0x00;
             
         case kMusicEventType_MIDINoteMessage:
             noteMsg = (MIDINoteMessage *)event;
+            [self showNoteInformationWithNote:noteMsg timestamp:timeStamp sequence:seq timeResolution:RESOLUTION];
             char status = 0x90 | noteMsg->channel;
             if (status == lastStatus) {
                 size -= 1;
@@ -222,7 +215,7 @@ static char lastStatus = 0x00;
     return data;
 }
 
-+ (NSData *)contentsOfTrack:(MusicTrack)track {
++ (NSData *)contentsOfTrack:(MusicTrack)track sequence:(MusicSequence)sequence {
     NSMutableData *contents = [NSMutableData data];
     MusicEventIterator iter;
     NewMusicEventIterator(track, &iter);
@@ -237,7 +230,7 @@ static char lastStatus = 0x00;
         int size;
         MusicEventIteratorGetEventInfo(iter, &timeStamp, &eventType, &data, &size);
         if ([queuedEvents count] == 0 || [[[queuedEvents objectAtIndex:0] objectAtIndex:0] floatValue] > timeStamp) {
-            [contents appendData:[self dataForEvent:data ofType:eventType atTimeDelta:(timeStamp - lastTimeStamp)]];
+            [contents appendData:[self dataForEvent:data ofType:eventType atTimeDelta:(timeStamp - lastTimeStamp) timeStamp:timeStamp sequence:sequence]];
             
             //for a note start event, queue up the end event
             if (eventType == kMusicEventType_MIDINoteMessage) {
@@ -274,7 +267,7 @@ static char lastStatus = 0x00;
     MIDIMetaEvent *endTrack = malloc(sizeof(MIDIMetaEvent));
     endTrack->metaEventType = 0x2F;
     endTrack->dataLength = 0;
-    [contents appendData:[self dataForEvent:endTrack ofType:kMusicEventType_Meta atTimeDelta:0]];
+    [contents appendData:[self dataForEvent:endTrack ofType:kMusicEventType_Meta atTimeDelta:0 timeStamp:0 sequence:sequence]];
     free(endTrack);
     
     DisposeMusicEventIterator(iter);
@@ -284,13 +277,13 @@ static char lastStatus = 0x00;
 + (NSData *)tempoTrackContentsForSequence:(MusicSequence)seq {
     MusicTrack track;
     MusicSequenceGetTempoTrack(seq, &track);
-    return [self contentsOfTrack:track];
+    return [self contentsOfTrack:track sequence:seq];
 }
 
 + (NSData *)contentsOfTrack:(int)index inSequence:(MusicSequence)seq {
     MusicTrack track;
     MusicSequenceGetIndTrack(seq, index, &track);
-    return [self contentsOfTrack:track];
+    return [self contentsOfTrack:track sequence:seq];
 }
 
 + (NSData *)contentsForSequence:(MusicSequence)seq {
@@ -320,6 +313,199 @@ static char lastStatus = 0x00;
     return data;
 }
 
++ (void)processMidiFileWithName:(NSString *)name  {
+    MusicSequence seq;
+    MusicPlayer player;
+    
+    // Initialise the music sequence
+    NewMusicSequence(&seq);
+    
+    
+    NSLog(@"processing midi file");
+    NSString *midiFilePath = [[NSBundle mainBundle] pathForResource:name ofType:@"mid"];
+    NSURL *midiFileURL = [NSURL fileURLWithPath:midiFilePath];
+    OSStatus err = MusicSequenceFileLoad(seq, (__bridge CFURLRef)midiFileURL, 0, 0);
+    NSLog(@"err:%d", err);
+    
+    
+    NewMusicPlayer(&player);
+    MusicPlayerSetSequence(player, seq);
+    
+    MusicTrack tempoTrack;
+    MusicSequenceGetTempoTrack(seq, &tempoTrack);
+    
+    MusicTrack trebleTrack;
+    MusicTrack bassTrack;
+    MusicSequenceNewTrack(seq, &trebleTrack);
+    MusicSequenceNewTrack(seq, &bassTrack);
+    
+    //http://ericjknapp.com/blog/2014/03/30/midi-files-and-tracks/
+    MusicSequenceGetIndTrack(seq, 0, &trebleTrack);
+    MusicSequenceGetIndTrack(seq, 1, &bassTrack);
+    
+    MusicEventIterator iterator;
+    NewMusicEventIterator(trebleTrack, &iterator);
+    
+    
+    // Pulses Per Quarter note
+    // http://ericjknapp.com/blog/2014/05/04/midi-measures/
+    //A value of 480 means a quarter note has a resolution of 480 parts. An eighth note will be 240, a sixteenth 120, and so forth. It gets more interesting with things like triplets. With a higher value of 480 for the PPQ, odd time divisions can be more accurate. When a very expressive musician with strong phrasing is playing, the resulting music will sound very natural.
+    // 384  = quarter note / 192 = eighth note
+    UInt32 timeResolution = [self determineTimeResolutionWithTempoTrack:tempoTrack];
+    
+    
+    MusicTimeStamp inBeats = 0;
+    UInt32 inSubbeatDivisor;
+    CABarBeatTime outBarBeatTime;
+    MusicSequenceBeatsToBarBeatTime(seq, inBeats, timeResolution, &outBarBeatTime);
+    
+    // PPQ or time resolution
+    NSLog(@"bar:%i, beat:%i, reserved:%i, subbeat:%i, subbeatDivisor: ( PPQ or time resolution)%i, inBeats:%f", outBarBeatTime.bar, outBarBeatTime.beat, outBarBeatTime.reserved, outBarBeatTime.subbeat, outBarBeatTime.subbeatDivisor, inBeats);
+    
+    
+    MusicEventType eventType;
+    MusicTimeStamp eventTimeStamp;
+    UInt32 eventDataSize;
+    const void *eventData;
+    
+    
+    
+    
+    Boolean hasCurrentEvent = NO;
+    MusicEventIteratorHasCurrentEvent(iterator, &hasCurrentEvent);
+    while (hasCurrentEvent) {
+        MusicEventIteratorGetEventInfo(iterator, &eventTimeStamp, &eventType, &eventData, &eventDataSize);
+        //NSLog(@"event timeStamp %f ", eventTimeStamp);
+        
+        
+        switch (eventType) {
+            case kMusicEventType_ExtendedNote: {
+                ExtendedNoteOnEvent *ext_note_evt = (ExtendedNoteOnEvent *)eventData;
+                NSLog(@"extended note event, instrumentID %u", (unsigned int)ext_note_evt->instrumentID);
+            }
+                break;
+                
+            case kMusicEventType_ExtendedTempo: {
+                ExtendedTempoEvent *ext_tempo_evt = (ExtendedTempoEvent *)eventData;
+                NSLog(@"ExtendedTempoEvent, bpm %f", ext_tempo_evt->bpm);
+            }
+                break;
+                
+            case kMusicEventType_User: {
+                MusicEventUserData *user_evt = (MusicEventUserData *)eventData;
+                NSLog(@"MusicEventUserData, data length %u", (unsigned int)user_evt->length);
+            }
+                break;
+                
+            case kMusicEventType_Meta: {
+                MIDIMetaEvent *meta_evt = (MIDIMetaEvent *)eventData;
+                //kMusicEventType_ExtendedTempo
+                UInt8 k =  meta_evt->metaEventType;
+                if (k == kMusicEventType_ExtendedTempo) {
+                    NSLog(@"tempo  data[0]: %d", meta_evt->data[0]);
+                    NSLog(@"tempo  data[1]: %d", meta_evt->data[1]);
+                    NSLog(@"tempo  data[2]: %d", meta_evt->data[2]);
+                    NSLog(@"tempo  data[3]: %d", meta_evt->data[3]);
+                }
+                else if (k == kMusicEventType_Meta) {
+                    NSLog(@"MIDIMetaEvent, detected kMusicEventType_Meta %d", meta_evt->data[1]);
+                }
+                else {
+                    //http://ericjknapp.com/blog/2014/03/30/midi-files-and-tracks/
+                    NSLog(@"MIDIMetaEvent, detected  %d", meta_evt->data[1]);
+                }
+            }
+                break;
+                
+            case kMusicEventType_MIDINoteMessage: {
+                MIDINoteMessage *note_evt = (MIDINoteMessage *)eventData;
+                [self showNoteInformationWithNote:note_evt timestamp:eventTimeStamp sequence:seq timeResolution:2];
+            }
+                break;
+                
+            case kMusicEventType_MIDIChannelMessage: {
+                MIDIChannelMessage *channel_evt = (MIDIChannelMessage *)eventData;
+                NSLog(@"channel event status %X", channel_evt->status);
+                
+                if (channel_evt->status == (0xC0 & 0xF0)) {
+                    //[self setPresetNumber:channel_evt->data1];
+                }
+            }
+                break;
+                
+            case kMusicEventType_MIDIRawData: {
+                MIDIRawData *raw_data_evt = (MIDIRawData *)eventData;
+                NSLog(@"MIDIRawData, length %u", (unsigned int)raw_data_evt->length);
+            }
+                break;
+                
+            case kMusicEventType_Parameter: {
+                ParameterEvent *parameter_evt = (ParameterEvent *)eventData;
+                NSLog(@"ParameterEvent, parameterid %u", (unsigned int)parameter_evt->parameterID);
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
+        MusicEventIteratorHasNextEvent(iterator, &hasCurrentEvent);
+        MusicEventIteratorNextEvent(iterator);
+    }
+}
+
++ (UInt32)determineTimeResolutionWithTempoTrack:(MusicTrack)tempoTrack {
+    UInt32 timeResolution = 0;
+    UInt32 propertyLength = 0;
+    
+    MusicTrackGetProperty(tempoTrack,
+                          kSequenceTrackProperty_TimeResolution,
+                          NULL,
+                          &propertyLength);
+    
+    
+    MusicTrackGetProperty(tempoTrack,
+                          kSequenceTrackProperty_TimeResolution,
+                          &timeResolution,
+                          &propertyLength);
+    
+    printf("propertyLength: %d\n", propertyLength);
+    printf("timeResolution: %d\n", timeResolution);
+    
+    return timeResolution;
+}
+
++ (void)showNoteInformationWithNote:(MIDINoteMessage *)noteMessage
+                          timestamp:(MusicTimeStamp)timestamp sequence:(MusicSequence)_sequence timeResolution:(UInt32)timeResolution {
+    CABarBeatTime barBeatTime;
+    MusicSequenceBeatsToBarBeatTime(_sequence, timestamp, timeResolution, &barBeatTime);
+    
+    printf("%03d:%02d:%03d, timestamp: %5.3f, channel: %d, note: %s, duration: %.3f\n",
+           barBeatTime.bar,
+           barBeatTime.beat,
+           barBeatTime.subbeat,
+           timestamp,
+           noteMessage->channel,
+           noteForMidiNumber(noteMessage->note),
+           noteMessage->duration
+           );
+}
+
+const char *noteForMidiNumber(int midiNumber) {
+    const char *const noteArraySharps[] = { "", "", "", "", "", "", "", "", "", "", "", "",
+        "C0", "C#0", "D0", "D#0", "E0", "F0", "F#0", "G0", "G#0", "A0", "A#0", "B0",
+        "C1", "C#1", "D1", "D#1", "E1", "F1", "F#1", "G1", "G#1", "A1", "A#1", "B1",
+        "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A2", "A#2", "B2",
+        "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3", "G#3", "A3", "A#3", "B3",
+        "C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4", "A4", "A#4", "B4",
+        "C5", "C#5", "D5", "D#5", "E5", "F5", "F#5", "G5", "G#5", "A5", "A#5", "B5",
+        "C6", "C#6", "D6", "D#6", "E6", "F6", "F#6", "G6", "G#6", "A6", "A#6", "B6",
+        "C7", "C#7", "D7", "D#7", "E7", "F7", "F#7", "G7", "G#7", "A7", "A#7", "B7",
+        "C8", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
+    
+    return noteArraySharps[midiNumber];
+}
+
 + (int)readTrackFrom:(NSData *)data into:(Song *)song atOffset:(int)offset withResolution:(int)resolution {
     int trackSize = [self readIntFrom:data offset:(offset + 4) length:4];
     offset += 8;
@@ -334,6 +520,7 @@ static char lastStatus = 0x00;
         int deltaTime;
         offset += [self readVariableLengthFrom:data into:&deltaTime atOffset:offset];
         deltaBeats += (float)deltaTime / (float)resolution;
+        NSLog(@"offset:%d deltaTime:%d", offset, deltaTime);
         int eventTypeAndChannel = [self readIntFrom:data offset:(offset) length:1];
         offset++;
         if (eventTypeAndChannel == 0xFF) {
@@ -586,6 +773,7 @@ static char lastStatus = 0x00;
     }
     int i, offset = 14;
     for (i = 0; i < numTracks; i++) {
+        NSLog(@"resolution:%d", resolution);
         offset += [self readTrackFrom:data into:song atOffset:offset withResolution:resolution];
     }
     while ([[song staffs] count] > 1) {

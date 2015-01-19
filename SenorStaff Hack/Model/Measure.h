@@ -131,7 +131,6 @@
 - (void)addToMusicXMLString:(NSMutableString *)string;
 - (NoteBase *)refreshNotes:(NoteBase *)rtn;
 - (void)grabNotesFromNextMeasure;
-- (Class)getViewClass;
-- (Class)getControllerClass;
+- (NSString *)debugDescription;
 
 @end

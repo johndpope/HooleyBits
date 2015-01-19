@@ -7,14 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SongPlayer.h"
+
 
 @class MusicDocument;
 @interface AppControl : NSObject {
     MusicDocument *testDoc;
-    Song *emptySong;
+    Song *song;
     NSData *_midiData;
-    SongPlayer *songPlayer;
 }
 
 @property MusicDocument *testDoc;

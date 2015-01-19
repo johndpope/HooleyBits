@@ -26,16 +26,13 @@
     if ((self = [super init])) {
         song = _song;
         canMute = YES;
+        Measure *firstMeasure = [[Measure alloc] initWithStaff:self];
+        [firstMeasure setClef:[Clef trebleClef]];
+        [firstMeasure setKeySignature:[KeySignature getSignatureWithFlats:0 minor:NO]];
+        self.measures = [[NSMutableArray alloc]initWithObjects:firstMeasure, nil];
     }
     
     return self;
-}
-
-- (void)configureFirstMeasure {
-    Measure *firstMeasure = [[Measure alloc] initWithStaff:self];
-    [firstMeasure setClef:[Clef trebleClef]];
-    [firstMeasure setKeySignature:[KeySignature getSignatureWithFlats:0 minor:NO]];
-    self.measures = [[NSMutableArray alloc]initWithObjects:firstMeasure, nil];
 }
 
 - (NSUndoManager *)undoManager {
@@ -183,7 +180,8 @@
 }
 
 - (void)addMeasure:(Measure *)measure {
-    // NSLog(@"addMeasure count:%d",  self.measures.count);
+    NSLog(@"addMeasure count:%lu",  (unsigned long)self.measures.count);
+
     if (![self.measures containsObject:measure]) {
         [[[self undoManager] prepareWithInvocationTarget:self] removeMeasure:measure];
         [self.measures addObject:measure];
@@ -194,6 +192,7 @@
 
 - (void)removeMeasure:(Measure *)measure {
     if ([self.measures containsObject:measure]) {
+        NSLog(@"removeMeasure");
         [[[self undoManager] prepareWithInvocationTarget:self] addMeasure:measure];
         [self.measures removeObject:measure];
         [song refreshTimeSigs];

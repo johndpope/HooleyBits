@@ -94,7 +94,7 @@
         }
     }
     else {
-        Note *firstAddedNote = [self addNotesInternal:@[_note] atIndex:index consolidate:NO];
+        Note *firstAddedNote = [self addNotesInternal:@[_note] atIndex:index consolidate:NO];xxc
         Measure *measure = [staff getMeasureContainingNote:firstAddedNote];
         if (tieToPrev) {
             Note *tie = [staff findPreviousNoteMatching:firstAddedNote inMeasure:measure];
@@ -889,6 +889,7 @@
         [string appendString:@"<clef>\n<sign>percussion</sign>\n</clef>\n"];
     }
     [string appendString:@"</attributes>\n"];
+    
     TempoData *tempo = [[[staff getSong] tempoData] objectAtIndex:[[staff getMeasures] indexOfObject:self]];
     if (![tempo empty]) {
         [string appendFormat:@"<sound tempo=\"%d\"/>\n", (int)[tempo tempo]];
@@ -977,5 +978,10 @@
 //    [self addToMusicXMLString:str];
 //    return str;
 //}
+- (NSString *)debugDescription {
+    NSMutableString *str = [NSMutableString string];
+    [self addToMusicXMLString:str];
+    return str;
+}
 
 @end

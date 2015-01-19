@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MIDIUtil.m"
-            timestampString = "443278176.817211"
+            timestampString = "443310991.6599"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "541"
-            endingLineNumber = "541"
+            startingLineNumber = "593"
+            endingLineNumber = "593"
             landmarkName = "+readTrackFrom:into:atOffset:withResolution:"
             landmarkType = "5">
          </BreakpointContent>

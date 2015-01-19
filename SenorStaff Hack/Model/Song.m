@@ -35,7 +35,6 @@ int enableMIDI = 1;
         doc = _doc;
         tempoData = [NSMutableArray arrayWithObject:[[TempoData alloc] initWithTempo:120 withSong:self]];
         Staff *first = [[Staff alloc] initWithSong:self];
-        [first configureFirstMeasure];
         staffs = [[NSMutableArray alloc]initWithObjects:first, nil];
         [(Staff *)[staffs objectAtIndex:0] setName:@"Staff 1"];
         timeSigs = [NSMutableArray arrayWithObject:[TimeSignature timeSignatureWithTop:4 bottom:4]];

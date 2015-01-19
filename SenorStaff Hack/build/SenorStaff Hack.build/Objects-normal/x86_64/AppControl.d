@@ -1,7 +1,6 @@
 dependencies: \
   /Users/johnpope/Documents/gitWorkspace/HooleyBits/SenorStaff\ Hack/AppControl.m \
   /Users/johnpope/Documents/gitWorkspace/HooleyBits/SenorStaff\ Hack/AppControl.h \
-  /Users/johnpope/Documents/gitWorkspace/HooleyBits/SenorStaff\ Hack/Src/SongPlayer.h \
   /Users/johnpope/Documents/gitWorkspace/HooleyBits/SenorStaff\ Hack/Frameworks/FScript.framework/Headers/FScript.h \
   /Users/johnpope/Documents/gitWorkspace/HooleyBits/SenorStaff\ Hack/Frameworks/FScript.framework/Headers/FSArray.h \
   /Users/johnpope/Documents/gitWorkspace/HooleyBits/SenorStaff\ Hack/Frameworks/FScript.framework/Headers/FSNSObject.h \

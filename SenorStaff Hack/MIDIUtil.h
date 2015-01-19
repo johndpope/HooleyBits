@@ -19,4 +19,5 @@
 
 + (void)readSong:(Song *)song fromMIDI:(NSData *)data;
 + (NSData *)writeSequenceToData:(MusicSequence)seq;
++ (void)processMidiFileWithName:(NSString *)name;
 @end
